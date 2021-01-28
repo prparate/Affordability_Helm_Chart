@@ -1,7 +1,8 @@
 #!/bin/bash
 
 help () {
-      echo "usage <proj> backend|frontend pull|export|save|push"
+      echo "usage <proj> backend|frontend pull|export|push"
+      echo "usage <proj> backend|frontend save ./somedir"
       exit 1
 }
 
@@ -30,7 +31,8 @@ export() {
 }
 
 save() {
-    HELM_EXPERIMENTAL_OCI=1 helm chart save . $REPO_TAG
+    D=$1
+    HELM_EXPERIMENTAL_OCI=1 helm chart save $D $REPO_TAG
 }
 
 push() {
@@ -51,7 +53,14 @@ echo "CMD:$CMD TARGET: $REPO_TAG "
 
 if [ $CMD = "save" ]
 then
-    save
+    if [ -z "$4" ]
+    then
+        echo "missing chart dir"
+        help
+    fi
+
+    DIR=$4
+    save $DIR
 fi
 
 if [ $CMD = "push" ]
