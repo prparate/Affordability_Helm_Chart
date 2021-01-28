@@ -1,0 +1,6 @@
+apiVersion: v2
+name: be__text_parser
+description: be__text_parser chart
+type: application
+version: 1.0.0
+appVersion: 1.0.0

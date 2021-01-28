@@ -1,0 +1,6 @@
+apiVersion: v2
+name: be__insurer_pricing_engine
+description: be__insurer_pricing_engine chart
+type: application
+version: 1.0.0
+appVersion: 1.0.0

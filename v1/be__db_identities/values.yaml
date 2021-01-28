@@ -1,0 +1,53 @@
+appName: be-db-identities
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__db_identities
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  postgresdb_credentials:
+      PF_DATABASE_ENCRYPTION_KEY: ENCRYPTION_KEY
+      PF_DATABASE_HOST_PORT: HOST_PORT
+      PF_DATABASE_USERNAME: USERNAME
+      PF_DATABASE_PASSWORD: PASSWORD
+      PF_DATABASE_SSL: SSL
+      PF_DATABASE_MICROSERVICES_HOST_PORT: HOST_PORT
+      PF_DATABASE_MICROSERVICES_NAME: DB_NAME
+      PF_DATABASE_MICROSERVICES_USERNAME: MS_USERNAME
+      PF_DATABASE_MICROSERVICES_PASSWORD: MS_PASSWORD
+      PF_DATABASE_MICROSERVICES_SSL: SSL
+      PF_DATABASE_MICROSERVICES_USERNAME_SUFFIX: SUFFIX
+      PF_DATABASE_MAX_CLIENTS_PER_SCHEMA: MAX_CLIENTS
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  server:  
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  ingress:
+    host: ""
+  env:
+    PF_DATABASE_MICROSERVICES_NAME: "be__db_identities_db1"
+    PF_SERVICE_NAME: "be__db_identities"
+    PF_DATABASE_SCRIPT_FILE: "./database"

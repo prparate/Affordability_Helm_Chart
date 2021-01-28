@@ -1,0 +1,49 @@
+appName: be-user-manager
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__user_manager
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  secretsJwt:
+    PF_JWT_PRIVATE_KEY: ""
+    PF_JWT_PUBLIC_KEY: ""
+  postgresdb_credentials:
+    PF_POSTGRES_ENCRYPTION_KEY: ENCRYPTION_KEY
+      
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  server:  
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+    PF_IDENTITIES_SERVICE_HOSTNAME: IDENTITIES_SERVICE_HOSTNAME
+    PF_USER_MANAGER_SERVICE_HOSTNAME: USER_MANAGER_SERVICE_HOSTNAME
+    PF_API_KEY_HEADER_AUTHORIZATION: API_KEY_HEADER_AUTHORIZATION
+    PF_JTW_EXPIRATION_TIME_IN_MINUTES: JTW_EXPIRATION_TIME_IN_MINUTES
+    PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
+  ingress:
+    host: "" 
+  kafka_servers: 
+    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET

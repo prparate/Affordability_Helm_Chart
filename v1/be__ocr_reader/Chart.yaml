@@ -1,0 +1,6 @@
+apiVersion: v2
+name: be__ocr_reader
+description: be__ocr_reader chart
+type: application
+version: 1.0.0
+appVersion: 1.0.0
