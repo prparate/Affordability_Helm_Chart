@@ -35,6 +35,17 @@ tls:
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
 configMaps:
+  env:
+    PF_HOST_PORT: "0.0.0.0:443"
+    PF_DEBUG: "0"
+    PF_SERVICE_NAME: "be__bff_portal"
+    PF_GRPC_HOST: "0.0.0.0"
+    PF_GRPC_PORT: "443"
+    PF_REST_HOST: "0.0.0.0"
+    PF_REST_PORT: "80"
+    PF_GRPC_EXTERNAL_PORT: "443"
+    PF_DATABASE_POOL_MAX_SIZE: "10"
+    PF_DATABASE_POOL_MIN_SIZE: "10"
   server:  
     PF_HOST_PORT: GRPC_SSL_HOST_PORT
     PF_IDENTITIES_SERVICE_HOSTNAME: IDENTITIES_SERVICE_HOSTNAME
@@ -47,21 +58,6 @@ configMaps:
   kafka_servers: 
     PF_KAFKA_SERVER: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET
-
-secrets:
-  env:
-    PF_HOST_PORT: "0.0.0.0:443"
-    PF_DEBUG: "0"
-    PF_SERVICE_NAME: "be__bff_portal"
-    PF_GRPC_HOST: "0.0.0.0"
-    PF_GRPC_PORT: "443"
-    PF_REST_HOST: "0.0.0.0"
-    PF_REST_PORT: "80"
-    PF_GRPC_EXTERNAL_PORT: "443"
-    PF_DATABASE_POOL_MAX_SIZE: "10"
-    PF_DATABASE_POOL_MIN_SIZE: "10"
-    PF_INSURER_PRICING_ENGINE_HOST_NAME: "be-insurer-pricing-engine.internal.dev.premfina.com"
-    PF_USER_MANAGER_HOST_NAME: "be-user-manager.internal.dev.premfina.com"
   kafka_topics:
     PF_KAFKA_INSURER_POLICY_COMMAND_TOPIC: "be__insurer_policies__command__policy"
     PF_KAFKA_INSURER_POLICY_QUERY_TOPIC: "be__insurer_policies__query__policy"
@@ -84,3 +80,4 @@ secrets:
     PF_KAFKA_TEXT_PARSER_COMMAND_CONFIGURATIONS: "be__text_parser__command__configurations"
     PF_KAFKA_TEXT_PARSER_COMMAND_FIELDS: "be__text_parser__command__fields"
     PF_KAFKA_TEXT_PARSER_COMMAND_PARSE_TEXT: "be__text_parser__command__parse_text"
+
