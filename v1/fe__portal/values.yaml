@@ -22,7 +22,11 @@ updateStrategy:
   maxUnavailable: 10%
   maxSurge: 1
 
-url:
-  envoy: https://be-envoy.services.dev.premfina.com
-ingress:
-  host: hub.services.dev.premfina.com
+configMaps:
+  url:
+    envoy: https://be-envoy.services.dev.premfina.com
+  ingress:
+    host: hub.services.dev.premfina.com
+    tls:
+      secretName: services-staging-tls
+
