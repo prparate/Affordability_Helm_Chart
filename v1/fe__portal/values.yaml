@@ -1,0 +1,28 @@
+appName: fe-portal
+replicasCount: 1
+
+containers:
+  protocol: TCP
+  containerPort: 80
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/frontend
+  # registry: premfinaukcontainerregistry.azurecr.io/docker/frontend
+  repository: fe__portal
+  tag: 0.1.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+url:
+  envoy: https://be-envoy.services.dev.premfina.com
+ingress:
+  host: hub.services.dev.premfina.com

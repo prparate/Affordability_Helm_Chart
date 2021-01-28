@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+{{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    {{- with .updateStrategy }}
+    type: {{ .type }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}  
+  selector:
+    matchLabels:
+      app: {{ .appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .appName }}
+{{- end }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ template "SET_DOCKER_IMAGE" . }}
+{{- with .Values }}
+          imagePullPolicy: {{ .image.policy }}
+          ports:
+            - containerPort:  {{ .containers.containerPort }}
+              protocol: {{ .containers.protocol | quote }}
+          volumeMounts:
+            - name: env-file
+              mountPath: /usr/share/nginx/html/config/env.json
+              subPath: env.json
+      volumes:
+        - name: env-file
+          configMap:
+            name: {{ .appName }}-configmap
+
+{{- end }}

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appName }}-configmap
+data:
+  env.json: |
+    {
+      "apiURL": "{{ .Values.url.envoy }}"
+    }
