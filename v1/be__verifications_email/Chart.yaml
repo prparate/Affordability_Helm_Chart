@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: 1.0.0
-description: be__bff_portal chart
-name: be__bff_portal
+description: be__verifications_email chart
+name: be__verifications_email
 type: application
 version: 1.0.0
