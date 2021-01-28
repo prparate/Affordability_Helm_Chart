@@ -1,0 +1,52 @@
+appName: be-verifications-email
+replicasCount: 1
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__verifications_email
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+secrets:
+  scylladb_credentials:
+      PF_SCYLLA_USERNAME: USERNAME
+      PF_SCYLLA_PASSWORD: PASSWORD
+
+configMaps:
+  env:
+    PF_VERSION: "0.0.0"
+  kafka_servers:
+    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET
+  server:  
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  ingress:
+    host: "" 
+  scylladb:
+    PF_SCYLLA_HOSTS: SCYLLA_SERVERS
+    PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
+    PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
+    PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
+  kafka_servers: 
+    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET 
