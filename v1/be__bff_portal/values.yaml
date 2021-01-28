@@ -1,0 +1,86 @@
+appName: be-bff-portal
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__bff_portal
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  secretsJwt:
+    PF_JWT_PRIVATE_KEY: ""
+    PF_JWT_PUBLIC_KEY: ""
+  postgresdb_credentials:
+    PF_POSTGRES_ENCRYPTION_KEY: ENCRYPTION_KEY
+      
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  server:  
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+    PF_IDENTITIES_SERVICE_HOSTNAME: IDENTITIES_SERVICE_HOSTNAME
+    PF_USER_MANAGER_SERVICE_HOSTNAME: USER_MANAGER_SERVICE_HOSTNAME
+    PF_API_KEY_HEADER_AUTHORIZATION: API_KEY_HEADER_AUTHORIZATION
+    PF_JTW_EXPIRATION_TIME_IN_MINUTES: JTW_EXPIRATION_TIME_IN_MINUTES
+    PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
+  ingress:
+    host: "" 
+  kafka_servers: 
+    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET
+
+secrets:
+  env:
+    PF_HOST_PORT: "0.0.0.0:443"
+    PF_DEBUG: "0"
+    PF_SERVICE_NAME: "be__bff_portal"
+    PF_GRPC_HOST: "0.0.0.0"
+    PF_GRPC_PORT: "443"
+    PF_REST_HOST: "0.0.0.0"
+    PF_REST_PORT: "80"
+    PF_GRPC_EXTERNAL_PORT: "443"
+    PF_DATABASE_POOL_MAX_SIZE: "10"
+    PF_DATABASE_POOL_MIN_SIZE: "10"
+    PF_INSURER_PRICING_ENGINE_HOST_NAME: "be-insurer-pricing-engine.internal.dev.premfina.com"
+    PF_USER_MANAGER_HOST_NAME: "be-user-manager.internal.dev.premfina.com"
+  kafka_topics:
+    PF_KAFKA_INSURER_POLICY_COMMAND_TOPIC: "be__insurer_policies__command__policy"
+    PF_KAFKA_INSURER_POLICY_QUERY_TOPIC: "be__insurer_policies__query__policy"
+    PF_KAFKA_INSURER_POLICY_LOG_TOPIC: "be__insurer_policies__log__policy"
+    PF_KAFKA_VERIFY_EMAIL_TOPIC: "be__user_manager__query__email"
+    PF_KAFKA_ACCOUNTING_COMMAND_LEDGERS_TOPIC: "be__accounting__command__ledgers"
+    PF_KAFKA_ACCOUNTING_COMMAND_TRANSACTIONS_TOPIC: "be__accounting__command__transactions"
+    PF_KAFKA_ACCOUNTING_COMMAND_TRANSACTION_TYPES_TOPIC: "be__accounting__command__transaction_types"
+    PF_KAFKA_ACCOUNTING_QUERY_LEDGERS_TOPIC: "be__accounting__query__ledgers"
+    PF_KAFKA_ACCOUNTING_QUERY_TRANSACTIONS_TOPIC: "be__accounting__query__transactions"
+    PF_KAFKA_ACCOUNTING_QUERY_TRANSACTION_TYPES_TOPIC: "be__accounting__query__transaction_types"
+    PF_KAFKA_ACCOUNTING_QUERY_JOURNALS_TOPIC: "be__accounting__query__journals"
+    PF_KAFKA_VERIFICATIONS_COMMAND_CONFIRM_TOPIC: "be__verifications__command__confirm"
+    PF_KAFKA_VERIFICATIONS_COMMAND_CREATE_TOPIC: "be__verifications__command__create"
+    PF_KAFKA_NASHVILLE_QUERY_PAYMENTS_TOPIC: "be__nashville__query__payments"
+    PF_KAFKA_NASHVILLE_QUERY_PAYMENT_DATES_TOPIC: "be__nashville__query__payment_dates"
+    PF_KAFKA_NASHVILLE_COMMAND_PAYMENT_DATES_TOPIC: "be__nashville__command__payment_dates"
+    PF_KAFKA_NASHVILLE_QUERY_SUBSCRIPTIONS_TOPIC: "be__nashville__query__subscriptions"
+    PF_KAFKA_NASHVILLE_COMMAND_SUBSCRIPTIONS_TOPIC: "be__nashville__command__subscriptions"
+    PF_KAFKA_TEXT_PARSER_COMMAND_CONFIGURATIONS: "be__text_parser__command__configurations"
+    PF_KAFKA_TEXT_PARSER_COMMAND_FIELDS: "be__text_parser__command__fields"
+    PF_KAFKA_TEXT_PARSER_COMMAND_PARSE_TEXT: "be__text_parser__command__parse_text"
