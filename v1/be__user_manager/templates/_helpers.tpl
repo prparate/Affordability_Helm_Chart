@@ -96,7 +96,7 @@ Set env variables
 {{ $tag := .Values.image.tag }}
 PF_VERSION: {{ $tag}}
 {{- range $key, $val := .Values.configMaps.env }}
-{{ $key }}: {{ $val }}
+{{ $key }}: {{ $val | quote }}
 {{- end}}
 {{- end }}
 
