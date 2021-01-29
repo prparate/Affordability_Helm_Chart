@@ -36,7 +36,7 @@ configMaps:
   env:
     PF_VERSION: "0.0.0"
   kafka_servers:
-    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET
   server:  
     PF_HOST_PORT: GRPC_SSL_HOST_PORT
