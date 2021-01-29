@@ -30,6 +30,7 @@ spec:
           {{- include "EXPORT_KAFKA_SERVERS_CONFIGMAP" . | indent 12 }}
           {{- include "EXPORT_KAFKA_TOPICS" . | indent 12 }}
           {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
+          {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
           name: {{ .Values.appName }}
           image: {{ template "SET_DOCKER_IMAGE" . }}
           {{- with .Values }}

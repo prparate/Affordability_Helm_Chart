@@ -67,6 +67,19 @@ Set kafka topics
 {{- end}}
 {{- end }}
 
+{{/*
+Set service hostnames
+*/}}
+{{- define "EXPORT_SERVICES_HOSTNAMES" -}}
+{{- range $key, $val := .Values.configMaps.services }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: services-configmap
+      key: {{ $key }}
+{{- end}}
+{{- end }}
+
 
 {{/*
 Range env variables

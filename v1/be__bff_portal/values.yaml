@@ -48,36 +48,12 @@ configMaps:
     PF_DATABASE_POOL_MIN_SIZE: "10"
   server:  
     PF_HOST_PORT: GRPC_SSL_HOST_PORT
-    PF_IDENTITIES_SERVICE_HOSTNAME: IDENTITIES_SERVICE_HOSTNAME
-    PF_USER_MANAGER_SERVICE_HOSTNAME: USER_MANAGER_SERVICE_HOSTNAME
     PF_API_KEY_HEADER_AUTHORIZATION: API_KEY_HEADER_AUTHORIZATION
     PF_JTW_EXPIRATION_TIME_IN_MINUTES: JTW_EXPIRATION_TIME_IN_MINUTES
     PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
   ingress:
     host: "" 
   kafka_servers: 
-    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET
-  kafka_topics:
-    PF_KAFKA_INSURER_POLICY_COMMAND_TOPIC: "be__insurer_policies__command__policy"
-    PF_KAFKA_INSURER_POLICY_QUERY_TOPIC: "be__insurer_policies__query__policy"
-    PF_KAFKA_INSURER_POLICY_LOG_TOPIC: "be__insurer_policies__log__policy"
-    PF_KAFKA_VERIFY_EMAIL_TOPIC: "be__user_manager__query__email"
-    PF_KAFKA_ACCOUNTING_COMMAND_LEDGERS_TOPIC: "be__accounting__command__ledgers"
-    PF_KAFKA_ACCOUNTING_COMMAND_TRANSACTIONS_TOPIC: "be__accounting__command__transactions"
-    PF_KAFKA_ACCOUNTING_COMMAND_TRANSACTION_TYPES_TOPIC: "be__accounting__command__transaction_types"
-    PF_KAFKA_ACCOUNTING_QUERY_LEDGERS_TOPIC: "be__accounting__query__ledgers"
-    PF_KAFKA_ACCOUNTING_QUERY_TRANSACTIONS_TOPIC: "be__accounting__query__transactions"
-    PF_KAFKA_ACCOUNTING_QUERY_TRANSACTION_TYPES_TOPIC: "be__accounting__query__transaction_types"
-    PF_KAFKA_ACCOUNTING_QUERY_JOURNALS_TOPIC: "be__accounting__query__journals"
-    PF_KAFKA_VERIFICATIONS_COMMAND_CONFIRM_TOPIC: "be__verifications__command__confirm"
-    PF_KAFKA_VERIFICATIONS_COMMAND_CREATE_TOPIC: "be__verifications__command__create"
-    PF_KAFKA_NASHVILLE_QUERY_PAYMENTS_TOPIC: "be__nashville__query__payments"
-    PF_KAFKA_NASHVILLE_QUERY_PAYMENT_DATES_TOPIC: "be__nashville__query__payment_dates"
-    PF_KAFKA_NASHVILLE_COMMAND_PAYMENT_DATES_TOPIC: "be__nashville__command__payment_dates"
-    PF_KAFKA_NASHVILLE_QUERY_SUBSCRIPTIONS_TOPIC: "be__nashville__query__subscriptions"
-    PF_KAFKA_NASHVILLE_COMMAND_SUBSCRIPTIONS_TOPIC: "be__nashville__command__subscriptions"
-    PF_KAFKA_TEXT_PARSER_COMMAND_CONFIGURATIONS: "be__text_parser__command__configurations"
-    PF_KAFKA_TEXT_PARSER_COMMAND_FIELDS: "be__text_parser__command__fields"
-    PF_KAFKA_TEXT_PARSER_COMMAND_PARSE_TEXT: "be__text_parser__command__parse_text"
 
