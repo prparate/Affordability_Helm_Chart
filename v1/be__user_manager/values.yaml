@@ -45,5 +45,5 @@ configMaps:
   ingress:
     host: "" 
   kafka_servers: 
-    PF_KAFKA_SERVER: KAFKA_SERVERS
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET
