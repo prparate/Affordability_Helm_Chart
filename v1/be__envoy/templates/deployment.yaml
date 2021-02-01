@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+{{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    {{- with .updateStrategy }}
+    type: {{ .type }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}  
+{{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+{{- with .Values }}
+          image: envoyproxy/envoy:v1.16-latest
+          imagePullPolicy: {{ .image.policy }}
+          env:
+            - name: ENVOY_UID
+              value: "0"
+          ports:
+            - containerPort:  {{ .containers.containerPort }}
+              protocol: {{ .containers.protocol | quote }}
+          volumeMounts:
+            - name: envoy-file
+              mountPath: /etc/envoy/envoy.yaml
+              subPath: envoy.yaml
+            - name: envoy-certs
+              mountPath: /etc/envoy/certs
+{{- end }}
+      volumes:
+        - name: envoy-file
+          configMap:
+            name: {{ .Release.Name }}-configmap
+        - name: envoy-certs
+          secret:
+            secretName: services-staging-tls
+
