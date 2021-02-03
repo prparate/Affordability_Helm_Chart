@@ -1,0 +1,26 @@
+appName: be-envoy
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: envoyproxy
+  repository: envoy
+  tag: v1.16-latest
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+configMaps:
+  ingress:
+    host: be-envoy.services.dev.premfina.com

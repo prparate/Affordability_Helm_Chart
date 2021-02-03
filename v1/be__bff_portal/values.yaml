@@ -52,7 +52,9 @@ configMaps:
     PF_JTW_EXPIRATION_TIME_IN_MINUTES: JTW_EXPIRATION_TIME_IN_MINUTES
     PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
   ingress:
-    host: "" 
+    host: ""
+    tls:
+      secret: internal-secret-tls
   kafka_servers: 
     PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET

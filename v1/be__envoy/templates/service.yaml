@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Release.Name }}-svc
+spec:
+  selector:
+    app: {{ .Release.Name }}
+{{- with .Values }}
+  {{- with .service }}
+  type: LoadBalancer
+  ports:
+    - port: {{ .port }}
+      targetPort: {{ .targetPort }}
+  {{- end }}    
+{{- end }}

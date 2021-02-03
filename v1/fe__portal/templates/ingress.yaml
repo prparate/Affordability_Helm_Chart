@@ -5,13 +5,19 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #  more_set_headers "Access-Control-Allow-Origin: *.services.staging.premfina.com";
+    # nginx.ingress.kubernetes.io/cors-allow-origin: "hub.services.staging.premfina.com"
+    # nginx.ingress.kubernetes.io/cors-allow-headers: "pf-authorization"
+    # nginx.ingress.kubernetes.io/auth-response-headers: "pf-authorization"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 {{- with .Values }}
 spec:
   tls:
     - hosts:
-        - {{ .configMaps.ingress.host }}
-      secretName: {{ .configMaps.ingress.tls.secretName }}
+      - {{ .configMaps.ingress.host }}
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
     - host: {{ .configMaps.ingress.host }}
       http:
