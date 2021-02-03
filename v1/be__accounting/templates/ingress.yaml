@@ -13,7 +13,7 @@ spec:
   {{- with .Values}}
     - hosts:
         - {{ .configMaps.ingress.host }}
-      secretName: tls-certificate-secrets
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
     http:
