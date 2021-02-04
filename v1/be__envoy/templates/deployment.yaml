@@ -48,5 +48,5 @@ spec:
             name: {{ .Release.Name }}-configmap
         - name: envoy-certs
           secret:
-            secretName: services-staging-tls
+            secretName: services-secret-tls
 
