@@ -13,7 +13,7 @@ spec:
   tls:
     - hosts:
         - {{ .configMaps.ingress.host }}
-    nginx.ingress.kubernetes.io/grpc-web: 'True'
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
     http:
