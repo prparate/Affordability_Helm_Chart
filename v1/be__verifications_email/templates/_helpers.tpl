@@ -46,8 +46,6 @@ Range scylladb configmap
 Set env variables
 */}}
 {{- define "SET_ENV_CONFIGS" -}}
-{{ $tag := .Values.image.tag }}
-PF_VERSION: {{ $tag}}
 {{- range $key, $val := .Values.configMaps.env }}
 {{ $key }}: {{ $val | quote }}
 {{- end}}
@@ -73,6 +71,8 @@ Range env variables
       name: {{ $appName }}-configmap
       key: {{ $key }}
 {{- end}}
+- name: PF_VERSION
+  value: {{ .Values.image.tag }}
 {{- end }}
 
 {{/*
