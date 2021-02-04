@@ -1,37 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.appName }}-deployment
+  name: {{ .Release.Name }}-deployment
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ .Values.appName }}
+    app: {{ .Release.Name }}
 spec:
-{{- with .Values }}
-  replicas: {{ .replicasCount }}
+  replicas: {{ .Values.replicasCount }}
   strategy:
-    {{- with .updateStrategy }}
-    type: {{ .type }}
+    type: {{ .Values.updateStrategy.type }}
     rollingUpdate:
-      maxUnavailable: {{ .maxUnavailable }}
-      maxSurge: {{ .maxSurge }}
-    {{- end }}  
+      maxUnavailable: {{ .Values.updateStrategy.maxUnavailable }}
+      maxSurge: {{ .Values.updateStrategy.maxSurge }}
   selector:
     matchLabels:
-      app: {{ .appName }}
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .appName }}
-{{- end }}
+        app: {{ .Release.Name }}
     spec:
       containers:
-        - name: {{ .Values.appName }}
+        - name: {{ .Release.Name }}
           image: {{ template "SET_DOCKER_IMAGE" . }}
-{{- with .Values }}
-          imagePullPolicy: {{ .image.policy }}
+          imagePullPolicy: {{ .Values.image.policy }}
           ports:
-            - containerPort:  {{ .containers.containerPort }}
-              protocol: {{ .containers.protocol | quote }}
+            - containerPort:  {{ .Values.containers.containerPort }}
+              protocol: {{ .Values.containers.protocol | quote }}
           volumeMounts:
             - name: env-file
               mountPath: /usr/share/nginx/html/config/env.json
@@ -39,6 +34,5 @@ spec:
       volumes:
         - name: env-file
           configMap:
-            name: {{ .appName }}-configmap
+            name: {{ .Release.Name }}-configmap
 
-{{- end }}
