@@ -24,3 +24,5 @@ updateStrategy:
 configMaps:
   ingress:
     host: be-envoy.services.dev.premfina.com
+    tls:
+      secretName: services-staging-tls

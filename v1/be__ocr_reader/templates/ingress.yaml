@@ -10,11 +10,11 @@ metadata:
     nginx.ingress.kubernetes.io/grpc-web: 'True'
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
-  tls:
   {{- with .Values}}
+  tls:
     - hosts:
         - {{ .configMaps.ingress.host }}
-      secretName: tls-certificate-secrets
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
     http:

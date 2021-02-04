@@ -47,6 +47,8 @@ configMaps:
     PF_HOST_PORT: GRPC_SSL_HOST_PORT
   ingress:
     host: ""
+    tls:
+      secret: internal-secret-tls
   env:
     PF_DATABASE_MICROSERVICES_NAME: "be__db_identities_db1"
     PF_SERVICE_NAME: "be__db_identities"

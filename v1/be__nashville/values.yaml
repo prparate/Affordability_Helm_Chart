@@ -58,6 +58,8 @@ configMaps:
     PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
   ingress:
     host: "" 
+    tls:
+      secret: internal-secret-tls
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
