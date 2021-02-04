@@ -14,7 +14,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.configMaps.ingress.host }}
-      secretName: services-staging-tls
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
     - host: {{ .Values.configMaps.ingress.host }}
       http:

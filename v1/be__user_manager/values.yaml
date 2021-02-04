@@ -44,6 +44,8 @@ configMaps:
     PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
   ingress:
     host: "" 
+    tls:
+      secret: internal-secret-tls
   kafka_servers: 
     PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET

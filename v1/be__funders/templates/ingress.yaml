@@ -12,7 +12,7 @@ spec:
   {{- with .Values}}
   tls:
     - hosts:
-      - {{ .configMaps.ingress.host }}
+        - {{ .configMaps.ingress.host }}
       secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
