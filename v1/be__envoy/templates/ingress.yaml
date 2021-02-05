@@ -10,11 +10,20 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-origin: "hub.services.staging.premfina.com"
     # nginx.ingress.kubernetes.io/cors-allow-headers: "x-grpc-web, *"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/grpc-web: 'True'
+    # nginx.ingress.kubernetes.io/enable-cors: "true"
+    # nginx.ingress.kubernetes.io/cors-allow-headers: "authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout"
+    # nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, DELETE, POST, OPTIONS"
+    # nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+      # more_set_headers "Access-Control-Allow-Origin: $http_origin";
 spec:
   tls:
     - hosts:
         - {{ .Values.configMaps.ingress.host }}
-      secretName: {{ .configMaps.ingress.tls.secret }}
+      secretName: {{ .Values.configMaps.ingress.tls.secret }}
   rules:
     - host: {{ .Values.configMaps.ingress.host }}
       http:
