@@ -1,18 +1,18 @@
-appName: be-verifications-email
-replicasCount: 1
+appName: be-esignatures-e-sign-co-uk
+replicasCount: 2
 
 containers:
   protocol: TCP
-  containerPort: 443
+  containerPort: 80
 
 service:
   type: ClusterIP
-  port: 443
-  targetPort: 443
+  port: 80
+  targetPort: 80
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: be__verifications_email
+  repository: be__esignatures_e_sign_co_uk
   tag: 0.0.0
   policy: Always
 
@@ -21,23 +21,18 @@ updateStrategy:
   maxUnavailable: 10%
   maxSurge: 1
 
+secrets:
+  scylladb_credentials:
+      PF_SCYLLA_USERNAME: USERNAME
+      PF_SCYLLA_PASSWORD: PASSWORD
+
 tls:
   files:
     PF_TLS_CA_FILE: /app/cert/ca.crt
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
-secrets:
-  scylladb_credentials:
-      PF_SCYLLA_USERNAME: USERNAME
-      PF_SCYLLA_PASSWORD: PASSWORD
-
 configMaps:
-  kafka_servers:
-    PF_KAFKA_SERVERS: KAFKA_SERVERS
-    PF_KAFKA_OFFSET: KAFKA_OFFSET
-  server:  
-    PF_HOST_PORT: GRPC_SSL_HOST_PORT
   ingress:
     host: "" 
     tls:
@@ -47,6 +42,3 @@ configMaps:
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
     PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
     PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
-  kafka_servers:
-    PF_KAFKA_SERVERS: KAFKA_SERVERS
-    PF_KAFKA_OFFSET: KAFKA_OFFSET
