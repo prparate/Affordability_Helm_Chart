@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+{{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    type: {{ .updateStrategy.type }}
+    rollingUpdate:
+      maxUnavailable: {{ .updateStrategy.maxUnavailable }}
+      maxSurge: {{ .updateStrategy.maxSurge }}
+{{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+{{- with .Values.image }}
+          image: {{ .registry }}/{{ .repository }}:{{ .tag }}
+          imagePullPolicy: {{ .policy }}
+          env:
+{{- end }}
+            - name: SCHEMA_REGISTRY_HOST_NAME
+              value: schema-registry.services.dev.premfina.com
+            - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-servers-configmap
+                  key: KAFKA_SERVERS
+          ports:
+{{- with .Values }}
+            - containerPort:  {{ .containers.containerPort }}
+              protocol: {{ .containers.protocol | quote }}
+ {{- end }}
