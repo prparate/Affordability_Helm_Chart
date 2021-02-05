@@ -45,9 +45,13 @@ spec:
           readinessProbe:
             exec:
               command: ["./be__grpc_health_probe"]
+            initialDelaySeconds: 10
+            periodSeconds: 5  
           livenessProbe:
             exec:
               command: ["./be__grpc_health_probe"]
+            initialDelaySeconds: 10
+            periodSeconds: 5
           {{- end }}
           lifecycle:
             preStop:
