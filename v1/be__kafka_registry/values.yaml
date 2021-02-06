@@ -1,0 +1,27 @@
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 8081
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8081
+
+image:
+  registry: confluentinc
+  repository: cp-schema-registry
+  tag: 5.4.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+configMaps:
+  ingress:
+    host: schema-registry.internal.dev.premfina.com
+    tls:
+      secret: internal-secret-tls
