@@ -74,6 +74,19 @@ Set env variables
 {{- end }}
 
 {{/*
+Set service hostnames
+*/}}
+{{- define "EXPORT_SERVICES_HOSTNAMES" -}}
+{{- range $key, $val := .Values.configMaps.services }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: services-configmap
+      key: {{ $key }}
+{{- end}}
+{{- end }}
+
+{{/*
 Set docker image
 */}}
 {{- define "SET_DOCKER_IMAGE" -}}
