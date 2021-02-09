@@ -31,7 +31,7 @@ Set scylladb secret
 {{/*
 Range scylladb configmap
 */}}
-{{- define "EXPORT_SCYLLADB_CONFIGMAP" -}}
+{{- define "SET_SCYLLADB_CONFIGMAP" -}}
 {{- range $key, $val := .Values.configMaps.scylladb }}
 - name: {{ $key }}
   valueFrom:
@@ -44,7 +44,7 @@ Range scylladb configmap
 {{/*
 Range env variables
 */}}
-{{- define "EXPORT_ENV_CONFIGS" -}}
+{{- define "SET_ENV_CONFIGS" -}}
 {{ $appName := .Values.appName }}
 {{- range $key, $val := .Values.configMaps.server }}
 - name: {{ $key }}
@@ -65,18 +65,18 @@ Range env variables
 {{- end }}
 
 {{/*
-Set env variables
+export for configmap 
 */}}
-{{- define "SET_ENV_CONFIGS" -}}
+{{- define "EXPORT_ENV_CONFIGS" -}}
 {{- range $key, $val := .Values.configMaps.env }}
 {{ $key }}: {{ $val | quote }}
 {{- end}}
 {{- end }}
 
 {{/*
-Set service hostnames
+Set external configmap from services-configmnap
 */}}
-{{- define "EXPORT_SERVICES_HOSTNAMES" -}}
+{{- define "SET_SERVICES_HOSTNAMES" -}}
 {{- range $key, $val := .Values.configMaps.services }}
 - name: {{ $key }}
   valueFrom:
@@ -85,6 +85,33 @@ Set service hostnames
       key: {{ $key }}
 {{- end}}
 {{- end }}
+
+{{/*
+Set external configmap
+*/}}
+{{- define "SET_EXTERNAL_CONFIGMAP" -}}
+{{- range $key, $val := .Values.configMaps.external_configmap }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: external-configmap
+      key: {{ $key }}
+{{- end}}
+{{- end }}
+
+{{/*
+Set scylladb secret
+*/}}
+{{- define "SET_EXTERNAL_SECRET" -}}
+{{- range $key, $val := .Values.secrets.external_secrets }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: external-secrets
+      key: {{ $val }}
+{{- end}}
+{{- end }}
+
 
 {{/*
 Set docker image

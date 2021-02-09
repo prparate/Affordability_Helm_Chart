@@ -4,4 +4,4 @@ metadata:
   name: {{ .Values.appName }}-configmap
   namespace: {{ .Release.Namespace }}
 data:
-  {{- include "SET_ENV_CONFIGS" . | indent 2 }}
+  {{- include "EXPORT_ENV_CONFIGS" . | indent 2 }}
