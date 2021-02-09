@@ -45,12 +45,12 @@ spec:
               readOnly: true  
           readinessProbe:
             tcpSocket:
-              port: 8443
+              port: {{ .containers.containerPort }}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 8443
+              port: {{ .containers.containerPort }}
             initialDelaySeconds: 15
             periodSeconds: 20
           {{- end }}
