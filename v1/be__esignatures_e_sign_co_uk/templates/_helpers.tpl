@@ -103,12 +103,12 @@ Set external configmap
 Set scylladb secret
 */}}
 {{- define "SET_EXTERNAL_SECRET" -}}
-{{- range $key, $val := .Values.secrets.external_secrets }}
+{{- range $key, $val := .Values.configMaps.external_secrets }}
 - name: {{ $key }}
   valueFrom:
     secretKeyRef:
       name: external-secrets
-      key: {{ $val }}
+      key: {{ $key }}
 {{- end}}
 {{- end }}
 
