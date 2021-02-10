@@ -1,4 +1,4 @@
-appName: be-bank-checker-experian
+appName: be-bank-checker
 replicasCount: 2
 
 containers:
@@ -12,7 +12,7 @@ service:
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: be__bank_checker_experian
+  repository: be__bank_checker
   tag: 0.0.0
   policy: Always
 
@@ -31,12 +31,8 @@ tls:
     PF_TLS_CA_FILE: /app/cert/ca.crt
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
-    PF_EXPERIAN_TLS_CRT_FILE: /app/be-bank-checker-experian/tls.crt
-    PF_EXPERIAN_TLS_KEY_FILE: /app/be-bank-checker-experian/tls.key
 
 configMaps:
-  server:  
-    PF_HOST_PORT: GRPC_SSL_HOST_PORT
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY

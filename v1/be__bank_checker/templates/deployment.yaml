@@ -28,6 +28,7 @@ spec:
           {{- include "SET_SCYLLADB_SECRET" . | indent 12 }}
           {{- include "EXPORT_SCYLLADB_CONFIGMAP" . | indent 12 }}
           {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
+          {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
           name: {{ .Values.appName }}
           image: {{ template "SET_DOCKER_IMAGE" . }}
           {{- with .Values }}
@@ -39,9 +40,6 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
-            - mountPath: "/app/be-bank-checker-experian"
-              name: experian-tls
-              readOnly: true  
           readinessProbe:
             tcpSocket:
               port: {{ .containers.containerPort }}
@@ -60,7 +58,4 @@ spec:
       volumes:
       - name: app-tls
         secret:
-          secretName: {{ template "CERT_TLS_SECRET_NAME" . }}      
-      - name: experian-tls
-        secret:
-          secretName: be-bank-checker-experian-secret-tls  
+          secretName: {{ template "CERT_TLS_SECRET_NAME" . }} 
