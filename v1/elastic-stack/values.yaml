@@ -1,0 +1,17 @@
+global:
+  elasticsearch:
+    host: ""
+    port: "9200"
+    scheme: "http"
+  elasticsearch_curator:
+    image: 
+      repository: untergeek/curator
+      tag: "5.8.1"
+    schedule: 0 0 * * *
+    action:
+      unit_count: 15
+  kibana:
+    name: "kibana"
+    port: "5601"
+    ingress:
+      host: "" 
