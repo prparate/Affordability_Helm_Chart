@@ -1,0 +1,54 @@
+kind: CronJob
+apiVersion: batch/v1beta1
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  {{- with .Values.global.elasticsearch_curator }}
+  schedule: {{ .schedule }}
+  {{- end }}
+  concurrencyPolicy: Allow
+  suspend: false
+  jobTemplate:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .Chart.Name }}
+        spec:
+          volumes:
+            - name: config-volume
+              configMap:
+                name: {{ .Chart.Name }}-config
+                defaultMode: 420
+          containers:
+            - name: {{ .Chart.Name }}
+              {{- with .Values.global.elasticsearch_curator.image }}
+              image: "{{ .repository  }}:{{ .tag  }}"
+              {{- end }}
+              command:
+                - /curator/curator
+              args:
+                - '--config'
+                - /etc/es-curator/config.yml
+                - /etc/es-curator/action_file.yml
+              resources: {}
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /etc/es-curator
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: IfNotPresent
+          terminationGracePeriodSeconds: 30
+          restartPolicy: "OnFailure"
+          dnsPolicy: ClusterFirst
+          securityContext:
+            runAsUser: 16
+          schedulerName: default-scheduler
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1

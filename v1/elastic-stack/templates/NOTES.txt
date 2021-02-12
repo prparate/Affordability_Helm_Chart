@@ -1,0 +1,3 @@
+{{ .Chart.Name }} was successfully upgraded/installed!
+Release name: {{ .Release.Name | quote }}.
+Revision version: {{ .Release.Revision  }}.
