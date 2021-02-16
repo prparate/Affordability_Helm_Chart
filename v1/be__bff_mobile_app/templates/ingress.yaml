@@ -6,20 +6,48 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/backend-protocol: "GRPCS"
-    nginx.ingress.kubernetes.io/grpc-web: 'True'
+    nginx.ingress.kubernetes.io/grpc-backend: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   tls:
   {{- with .Values}}
     - hosts:
-        - {{ .configMaps.ingress.host }}
-      secretName: {{ .configMaps.ingress.tls.secret }}
+        - {{ .configMaps.ingress.grpc.host }}
+      secretName: {{ .configMaps.ingress.grpc.tls.secret }}
   rules:
-  - host: {{ .configMaps.ingress.host }}
+  - host: {{ .configMaps.ingress.grpc.host }}
     http:
       paths:
       - backend:
           serviceName: {{ .appName }}-svc
-          servicePort: {{ .service.port }}
+          servicePort: {{ .service.grpc.port }}
+        path: /(.*)
+      - backend:
+          serviceName: {{ .appName }}-svc
+          servicePort: {{ .service.rest.port }}
+        path: /v1/(.*)
+  {{- end }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.appName }}-rest-ingress
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  tls:
+  {{- with .Values}}
+    - hosts:
+        - {{ .configMaps.ingress.rest.host }}
+      secretName: {{ .configMaps.ingress.rest.tls.secret }}
+  rules:
+  - host: {{ .configMaps.ingress.rest.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .appName }}-svc
+          servicePort: {{ .service.rest.port }}
         path: /(.*)
   {{- end }}

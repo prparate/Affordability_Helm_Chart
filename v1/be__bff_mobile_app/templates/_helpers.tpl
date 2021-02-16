@@ -102,6 +102,11 @@ Range env variables
 {{- end}}
 - name: PF_VERSION
   value: {{ .Values.image.tag }}
+- name: PF_GRPC_PORT
+  value: {{ .Values.service.grpc.port | quote }}
+- name: PF_REST_PORT
+  value: {{ .Values.service.rest.port | quote}}
+
 {{- end }}
 
 {{/*
