@@ -27,26 +27,21 @@ spec:
 {{- with .Values.image }}
           image: {{ .registry }}/{{ .repository }}:{{ .tag }}
           imagePullPolicy: {{ .policy }}
+{{- end }}
           resources:
             requests:
-              memory: "250Mi"
-              cpu: "124m"
-            limits:
               memory: "1Gi"
               cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1000m"
           env:
-{{- end }}
-            - name: SCHEMA_REGISTRY_HOST_NAME
-              value: schema-registry.services.dev.premfina.com
-            - name: KUR
-              valueFrom:
-                configMapKeyRef:
-                  name: kafka-servers-configmap
-                  key: KAFKA_SERVERS
-            - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
-              value: kafka.internal.dev.premfina.com
+           {{- include "SET_ENV_CONFIGS" . | indent 12 }}
+            - name: CONNECT_BOOTSTRAP_SERVERS
+              value: kafka.internal.dev.premfina.com:9092
           ports:
 {{- with .Values }}
             - containerPort:  {{ .containers.containerPort }}
               protocol: {{ .containers.protocol | quote }}
  {{- end }}
+ 
