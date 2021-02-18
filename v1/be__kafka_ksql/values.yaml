@@ -1,0 +1,34 @@
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 8088
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8088
+
+image:
+  registry: confluentinc
+  repository: ksqldb-server
+  tag: 0.14.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+configMaps:
+  ingress:
+    host: kafka-ksql.internal.dev.premfina.com
+    tls:
+      secret: internal-secret-tls
+  env:
+    KSQL_LISTENERS: http://0.0.0.0:8088
+    KSQL_KSQL_SERVICE_ID: ksql_dev01
+    KSQL_KSQL_SINK_REPLICAS: 2
+    KSQL_KSQL_STREAMS_REPLICATION_FACTOR: 2
+    KSQL_KSQL_INTERNAL_TOPIC_REPLICAS: 2
+
