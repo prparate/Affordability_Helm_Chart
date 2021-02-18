@@ -38,13 +38,13 @@ spec:
 {{- end }}
             - name: SCHEMA_REGISTRY_HOST_NAME
               value: schema-registry.services.dev.premfina.com
-            - name: KUR
+            - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
               valueFrom:
                 configMapKeyRef:
                   name: kafka-servers-configmap
                   key: KAFKA_SERVERS
-            - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
-              value: kafka.internal.dev.premfina.com
+            # - name: SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL
+              # value: kafka.internal.dev.premfina.com
           ports:
 {{- with .Values }}
             - containerPort:  {{ .containers.containerPort }}
