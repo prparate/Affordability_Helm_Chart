@@ -24,7 +24,9 @@ updateStrategy:
 
 configMaps:
   api:
-    url: https://be-envoy.services.dev.premfina.com
+    url: "https://be-bff-portal.services.dev.premfina.com"
+  restApi:
+    url: "https://be-bff-portal-rest.services.dev.premfina.com/v1"
   ingress:
     host: hub.dev.premfina.com
     tls:

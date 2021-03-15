@@ -6,5 +6,6 @@ metadata:
 data:
   env.json: |
     {
-      "apiURL": "{{ .Values.configMaps.api.url }}"
+      "apiURL": "{{ .Values.configMaps.api.url }}",
+      "restApiURL": "{{ .Values.configMaps.restApi.url }}"
     }
