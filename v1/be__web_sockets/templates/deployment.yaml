@@ -40,11 +40,15 @@ spec:
               name: app-tls
               readOnly: true
           readinessProbe:
-            exec:
-              command: ["./be__grpc_health_probe"]
+            tcpSocket:
+              port: {{ .containers.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
           livenessProbe:
-            exec:
-              command: ["./be__grpc_health_probe"]
+            tcpSocket:
+              port: {{ .containers.containerPort }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
           {{- end }}
           lifecycle:
             preStop:
