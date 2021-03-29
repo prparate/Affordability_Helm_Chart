@@ -10,7 +10,11 @@ spec:
   {{- with .service }}
   type: {{ .type }}
   ports:
-    - port: {{ .port }}
+    - name: grpc
+      port: {{ .grpc.port }}
       targetPort: {{ .targetPort }}
-  {{- end }}    
+    - name: rest
+      port: {{ .rest.port }}
+      targetPort: {{ .targetPort }}
+  {{- end }}
 {{- end }}
