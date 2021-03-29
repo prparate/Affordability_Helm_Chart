@@ -40,13 +40,17 @@ spec:
               name: app-tls
               readOnly: true
           readinessProbe:
-            tcpSocket:
+            httpGet:
+              path: /ping
               port: {{ .containers.containerPort }}
+              scheme: HTTPS
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
-            tcpSocket:
+            httpGet:
+              path: /ping
               port: {{ .containers.containerPort }}
+              scheme: HTTPS
             initialDelaySeconds: 15
             periodSeconds: 20
           {{- end }}
