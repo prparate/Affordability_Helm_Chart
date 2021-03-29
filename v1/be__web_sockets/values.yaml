@@ -29,7 +29,7 @@ tls:
 
 configMaps:
   server:  
-    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+    PF_HOST_PORT: REST_SSL_HOST_PORT
   ingress:
     host: "" 
     tls:
