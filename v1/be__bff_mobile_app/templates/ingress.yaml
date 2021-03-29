@@ -22,10 +22,6 @@ spec:
           serviceName: {{ .appName }}-svc
           servicePort: {{ .service.grpc.port }}
         path: /(.*)
-      - backend:
-          serviceName: {{ .appName }}-svc
-          servicePort: {{ .service.rest.port }}
-        path: /v1/(.*)
   {{- end }}
 ---
 apiVersion: networking.k8s.io/v1beta1
@@ -35,7 +31,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 128m
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/cors-allow-headers: "authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET,PUT,DELETE,POST,OPTIONS"
 spec:
   tls:
   {{- with .Values}}
