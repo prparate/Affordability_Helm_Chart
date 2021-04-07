@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-cdc-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- with .Values }}
+  replicas: 1
+  strategy:
+    {{- with .updateStrategy }}
+    type: {{ .type }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}  
+  selector:
+    matchLabels:
+      app: {{ .appName }}-cdc
+  template:
+    metadata:
+      labels:
+        app: {{ .appName }}-cdc
+    spec:
+      containers:
+        - env:        
+          - name: PF_KAFKA_SERVERS
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-servers-configmap
+                key: {{ .configMaps.kafka_servers.PF_KAFKA_SERVERS }}
+          - name: PF_SCYLLA_HOSTS
+            valueFrom:
+              configMapKeyRef:
+                name: scylladb-servers-configmap
+                key: {{ .configMaps.scylladb.PF_SCYLLA_HOSTS }}
+          - name: PF_SCYLLA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: scylladb-secrets
+                key: {{ .secrets.scylladb_credentials.PF_SCYLLA_USERNAME }}
+          - name: PF_SCYLLA_PASSWORD
+            valueFrom: 
+              secretKeyRef:
+                name: scylladb-secrets
+                key: {{ .secrets.scylladb_credentials.PF_SCYLLA_PASSWORD }}
+          - name: PF_SCYLLA_KEYSPACE
+            value: {{   .image.repository }}
+          - name: PF_SCYLLA_CONSISTENCY
+            value: "Quorum"
+          - name: PF_PROGRESS_TABLE
+            value: "streams_progress"
+          - name: PF_PROGRESS_TABLE_TTL
+            value: "1209600"
+          - name: PF_SKIP_COLUMNS
+            value: "password"
+          - name: PF_CDC_WRITER_RUN_FREQUENCY
+            value: "5"
+          name: {{ .appName }}-cdc
+          image: premfinaukcontainerregistry.azurecr.io/docker/backend/be__cdc_scylla_kafka:lastest
+          imagePullPolicy: {{ .image.policy }}
+          ports:
+            - containerPort:  9090
+              protocol: {{ .containers.protocol | quote }}
+          {{- end }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 15"]
