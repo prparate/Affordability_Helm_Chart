@@ -1,0 +1,54 @@
+appName: be-global-workspace-auth
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__global_workspace_auth
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  secretsJwt:
+      PF_JWT_PRIVATE_KEY: ""
+      PF_JWT_PUBLIC_KEY: ""
+  scylladb_credentials:
+      PF_SCYLLA_USERNAME: GLOBAL_USERNAME
+      PF_SCYLLA_PASSWORD: GLOBAL_PASSWORD
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  server:  
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+    PF_JTW_EXPIRATION_TIME_IN_MINUTES: JTW_EXPIRATION_TIME_IN_MINUTES
+    PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
+  ingress:
+    host: ""
+    tls:
+      secret: internal-secret-tls
+  scylladb:
+    PF_SCYLLA_HOSTS: GLOBAL_SCYLLA_SERVERS
+    PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
+    PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
+    PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
+  kafka_servers: 
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET 
