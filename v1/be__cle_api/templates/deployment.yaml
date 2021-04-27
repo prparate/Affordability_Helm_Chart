@@ -40,7 +40,6 @@ spec:
               value: "/"
             - name: file.payer.reportdir
               value: "/"
-
           {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
           {{- include "EXPORT_LOGGING" . | indent 12 }}
           {{- include "EXPORT_ORACLE" . | indent 12 }}
@@ -50,8 +49,7 @@ spec:
           {{- include "EXPORT_EMAIL_SECRET" . | indent 12 }}
           {{- include "EXPORT_EXT_SECRET" . | indent 12 }}
           {{- include "EXPORT_WEB_SECRET" . | indent 12 }}
-          {{- include "EXPORT_ORACLE_SECRET" . | indent 12 }}
-          
+          {{- include "EXPORT_ORACLE_SECRET" . | indent 12 }}          
           name: {{ .Release.Name }}
           image: {{ template "SET_DOCKER_IMAGE" . }}
           imagePullPolicy: {{ .Values.image.policy }}
