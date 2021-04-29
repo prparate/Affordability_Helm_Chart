@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    cle: cle-api
+    pfenv: {{ .Values.pfenv }}
+spec:
+  {{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    {{- with .updateStrategy }}
+    type: {{ .type }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}  
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - env:
+            - name: PF_SERVER_PORT
+              value: "8080"
+            - name: PF_PANENV_ENV
+              value: {{ .Values.pfenv }}
+            - name: file.newag.outputdir
+              value: "/"
+            - name: file.payer.outputdir
+              value: "/"
+            - name: file.payer.finaldir
+              value: "/"
+            - name: file.payer.reportdir
+              value: "/"
+          {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
+          {{- include "EXPORT_LOGGING" . | indent 12 }}
+          {{- include "EXPORT_ORACLE" . | indent 12 }}
+          {{- include "EXPORT_INT" . | indent 12 }}
+          {{- include "EXPORT_EMAIL" . | indent 12 }}
+          {{- include "EXPORT_CFG" . | indent 12 }}
+          {{- include "EXPORT_EMAIL_SECRET" . | indent 12 }}
+          {{- include "EXPORT_EXT_SECRET" . | indent 12 }}
+          {{- include "EXPORT_WEB_SECRET" . | indent 12 }}
+          {{- include "EXPORT_ORACLE_SECRET" . | indent 12 }}          
+          name: {{ .Release.Name }}
+          image: {{ template "SET_DOCKER_IMAGE" . }}
+          imagePullPolicy: {{ .Values.image.policy }}
+          ports:
+            - containerPort:  8080
+              protocol: "TCP"
