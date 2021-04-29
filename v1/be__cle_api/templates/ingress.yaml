@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.configMaps.ingress.rest.host }}
+        - {{ template "REST_INGRESS" . }}
       secretName: {{ .Values.configMaps.ingress.rest.tls.secret }}
   rules:
   - host: {{ template "REST_INGRESS" . }}
