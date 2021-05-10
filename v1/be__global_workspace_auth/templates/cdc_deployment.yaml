@@ -56,7 +56,7 @@ spec:
           - name: PF_CDC_WRITER_RUN_FREQUENCY
             value: "5"
           name: {{ .appName }}-cdc
-          image: premfinaukcontainerregistry.azurecr.io/docker/backend/be__cdc_scylla_kafka:lastest
+          image: premfinaukcontainerregistry.azurecr.io/docker/backend/be__cdc_scylla_kafka:latest
           imagePullPolicy: {{ .image.policy }}
           ports:
             - containerPort:  9090
