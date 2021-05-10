@@ -6,6 +6,13 @@ Set certificate secret name tls
 {{- end -}}
 
 {{/*
+Set certificate secret name tls
+*/}} 
+{{- define "CERT_JWT_TLS_SECRET_NAME" -}}
+jwt-certificate-secrets
+{{- end -}}
+
+{{/*
 Set certificate tls files
 */}} 
 {{- define "CERT_TLS_FILE_NAMES"  -}}
@@ -13,6 +20,16 @@ Set certificate tls files
 - name: {{ $key }}
   value: {{ $val }}
 {{- end }}
+{{- end }}
+
+{{/*
+Set certificate jwt files
+*/}} 
+{{- define "CERT_JWT_TLS_FILE_NAMES"  }}
+{{- range $key, $val := .Values.secrets.secretsJwt }}
+- name: {{ $key }}
+  value: {{ $val }}
+{{- end}}
 {{- end }}
 
 {{/*

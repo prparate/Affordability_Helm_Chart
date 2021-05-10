@@ -27,9 +27,14 @@ tls:
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
+secrets:
+  secretsJwt:
+    PF_JWT_PUBLIC_KEY: /app/jwt/PF_JWT_PUBLIC_KEY
+
 configMaps:
   server:  
     PF_HOST_PORT: REST_SSL_HOST_PORT
+    PF_JWT_AUTHORIZATION: JWT_AUTHORIZATION
   ingress:
     host: "" 
     tls:
