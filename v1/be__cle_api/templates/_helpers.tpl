@@ -1,5 +1,9 @@
 {{- define "REST_INGRESS" -}}
-{{- printf "cle-api-%s.internal.%s.premfina.com" .Values.pfenv .Values.pfvnet -}}
+{{- if eq .Values.pfvnet "prod" }}
+  {{- printf "cle-api-%s.services.premfina.com" .Values.pfenv -}}
+{{- else }}
+  {{- printf "cle-api-%s.services.%s.premfina.com" .Values.pfenv .Values.pfvnet -}}
+{{- end }}
 {{- end }}
 
 {{/*

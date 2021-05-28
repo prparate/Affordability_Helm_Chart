@@ -1,4 +1,4 @@
-appName: 
+appName:
 replicasCount: 1
 
 containers:
@@ -23,7 +23,7 @@ updateStrategy:
   type: RollingUpdate
   maxUnavailable: 10%
   maxSurge: 1
-      
+
 tls:
   files:
     PF_TLS_CA_FILE: /app/cert/ca.crt
@@ -33,7 +33,6 @@ tls:
 configMaps:
   ingress:
     rest:
-      host: "cle-api-pf-dev.internal.dev.premfina.com"
+      host: "cle-api-pf-dev.services.dev.premfina.com"
       tls:
-        secret: internal-secret-tls
-
+        secret: services-secret-tls
