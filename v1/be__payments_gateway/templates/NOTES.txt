@@ -2,3 +2,5 @@
 Release name: {{ .Release.Name | quote }}.
 Revision version: {{ .Release.Revision  }}.
 Namespace: {{ .Release.Namespace }}.
+Ingress GRPC: {{ .Values.configMaps.ingress.grpc.host}}
+Ingress REST: {{ .Values.configMaps.ingress.rest.host}}
