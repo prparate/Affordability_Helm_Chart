@@ -1,0 +1,59 @@
+appName: be-payments-gateway
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  rest:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+  grpc:
+    type: ClusterIP
+    port: 443
+    targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__payments_gateway
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  scylladb_credentials:
+      PF_SCYLLA_USERNAME: USERNAME
+      PF_SCYLLA_PASSWORD: PASSWORD
+
+tls:
+  files:
+    PF_TLS_CA_FILE:  /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  server:
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  ingress:
+    grpc:
+      host: ""
+      tls: 
+        secret: internal-secret-tls
+    rest:
+      host: ""
+      tls:
+        secret: services-secret-tls
+  scylladb:
+    PF_SCYLLA_HOSTS: SCYLLA_SERVERS
+    PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
+    PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
+    PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
+  kafka_servers:
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET
