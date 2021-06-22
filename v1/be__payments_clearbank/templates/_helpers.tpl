@@ -16,6 +16,29 @@ Set certificate tls files
 {{- end }}
 
 {{/*
+Set certificate tls files
+*/}} 
+{{- define "CLEARBANK_TLS_FILE"  -}}
+{{- range $key, $val := .Values.configMaps.clearbank_tls_helm }}
+- name: {{ $key }}
+  value: {{ $val }}
+{{- end }}
+{{- end }}
+
+{{/*
+Set API token secret
+*/}} 
+{{- define "CLEARBANK_API_TOKEN"  }}
+{{- range $key, $val := .Values.configMaps.clearbank_api_token_helm }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: clearbank-payments-api-token
+      key: {{ $val }}
+{{- end}}
+{{- end }}
+
+{{/*
 Set scylladb secret
 */}}
 {{- define "SET_SCYLLADB_SECRET" -}}
@@ -99,12 +122,12 @@ Range env variables
       name: {{ $appName }}-configmap
       key: {{ $key }}
 {{- end}}
-{{- range $key, $val := .Values.configMaps.external_configmap }}
+{{- range $key, $val := .Values.configMaps.clearbank_external_helm }}
 - name: {{ $key }}
   valueFrom:
     configMapKeyRef:
       name: external-configmap
-      key: {{ $key }}
+      key: {{ $val }}
 {{- end}}
 - name: PF_VERSION
   value: {{ .Values.image.tag }}
@@ -112,8 +135,6 @@ Range env variables
 
 {{/*
 Set env variables
-
-
 */}}
 {{- define "SET_ENV_CONFIGS" -}}
 {{- range $key, $val := .Values.configMaps.env }}

@@ -2,18 +2,14 @@ appName: be-payments-clearbank
 replicasCount: 2
 
 containers:
-  rest:
     protocol: TCP
-    containerPort: 80
-  gRPC:
-    protocol: grpc
     containerPort: 443
 
 service:
   rest:
     type: ClusterIP
     port: 80
-    targetPort: 8080
+    targetPort: 80
   grpc:
     type: ClusterIP
     port: 443
@@ -34,8 +30,6 @@ secrets:
   scylladb_credentials:
       PF_SCYLLA_USERNAME: USERNAME
       PF_SCYLLA_PASSWORD: PASSWORD
-  secretsClearbank:
-      PF_CLEARBANK_KEY_FILE: "/app/clearbank/tls.key"
 
 tls:
   files:
@@ -44,6 +38,18 @@ tls:
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
 configMaps:
+  env:
+    PF_HOST_PORT: "0.0.0.0:443"
+    PF_GRPC_HOST: "0.0.0.0"
+    PF_GRPC_PORT: "443"
+    PF_REST_HOST: "0.0.0.0"
+    PF_REST_PORT: "80"
+  clearbank_external_helm:
+    PF_CLEARBANK_API_BASE_URL: PF_CLEARBANK_API_BASE_URL
+  clearbank_tls_helm:
+    PF_CLEARBANK_KEY_FILE: /app/clearbank/clearbank.key
+  clearbank_api_token_helm:
+      PF_CLEARBANK_TOKEN: PF_CLEARBANK_API_TOKEN
   server:
     PF_HOST_PORT: GRPC_SSL_HOST_PORT
   ingress:
