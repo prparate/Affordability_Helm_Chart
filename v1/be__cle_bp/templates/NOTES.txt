@@ -1,0 +1,5 @@
+{{ .Values.appName }} was successfully upgraded/installed.
+Release name: {{ .Release.Name | quote }}.
+Revision version: {{ .Release.Revision  }}.
+Namespace: {{ .Release.Namespace }}.
+Ingress: {{ template "REST_INGRESS" . }}

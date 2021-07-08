@@ -1,0 +1,38 @@
+appName:
+replicasCount: 1
+
+containers:
+  protocol: TCP
+  containerPort: 8080
+
+pfenv: unset
+
+# service:
+#   rest:
+#     type: ClusterIP
+#     port: 80
+#     targetPort: 8080
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__cle_bp
+  tag: 0.0.1
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  ingress:
+    rest:
+      host: "cle-bp-pf-dev.services.dev.premfina.com"
+      tls:
+        secret: services-secret-tls
