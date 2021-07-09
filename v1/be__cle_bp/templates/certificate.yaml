@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ .Release.Name }}-certificate
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretName: {{ template "CERT_TLS_SECRET_NAME" . }}
+  issuerRef:
+    name: issuer-ca
+    kind: Issuer
+  commonName: "{{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  organization:
+    - Premfina {{ .Release.Namespace }}
+  dnsNames:
+    - "{{ .Release.Name }}"
+    - "{{ .Release.Name }}-svc"
+    - "{{ .Release.Name }}-svc.{{ .Release.Namespace }}"
+    - "{{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc"
+    - "{{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc.cluster"
+    - "{{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc.cluster.local"
+    - "localhost"

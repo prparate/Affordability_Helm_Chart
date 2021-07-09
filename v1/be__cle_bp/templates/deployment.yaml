@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+    cle: cle-bp
+    pfenv: {{ .Values.pfenv }}
+spec:
+  {{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    {{- with .updateStrategy }}
+    type: {{ .type }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}  
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - env:
+          {{- include "EXPORT_ENV" . | indent 12 }}
+          {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
+          {{- include "EXPORT_LOGGING" . | indent 12 }}
+          {{- include "EXPORT_INT" . | indent 12 }}
+          {{- include "EXPORT_CFG" . | indent 12 }}
+          name: {{ .Release.Name }}
+          # image: {{ template "SET_DOCKER_IMAGE" . }}
+          image: premfinaukcontainerregistry.azurecr.io/docker/backend/cle_bp:0.0.1
+          imagePullPolicy: {{ .Values.image.policy }}
+          ports:
+            - containerPort:  8080
+              protocol: "TCP"
+            - containerPort:  8443
+              protocol: "TCP"
+          volumeMounts:
+            - mountPath: "/app/cert"
+              name: app-tls
+              readOnly: true
+      volumes:
+      - name: app-tls
+        secret:
+          secretName: {{ template "CERT_TLS_SECRET_NAME" . }}
