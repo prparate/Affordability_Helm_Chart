@@ -89,7 +89,7 @@ Set service hostnames
 Set postgresdb secret
 */}}
 {{- define "EXPORT_LOGGING" -}}
-{{- $cfgMap := printf "cle-logging-api-%s-configmap" .Values.pfenv -}}
+{{- $cfgMap := printf "cle-logging-bp-%s-configmap" .Values.pfenv -}}
 {{- range $key, $val := .Values.configMaps.cle_logging }}
 - name: {{ $key }}
   valueFrom:
@@ -101,7 +101,7 @@ Set postgresdb secret
 {{- end }}
 
 {{- define "EXPORT_CFG" -}}
-{{- $cfgMap := printf "cle-configuration-api-%s-configmap" .Values.pfenv -}}
+{{- $cfgMap := printf "cle-configuration-bp-%s-configmap" .Values.pfenv -}}
 {{- range $key, $val := .Values.configMaps.cle_configuration }}
 - name: {{ $key }}
   valueFrom:
