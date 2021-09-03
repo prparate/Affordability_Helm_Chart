@@ -3,7 +3,8 @@
 Set certificate secret name tls
 */}} 
 {{- define "CERT_TLS_SECRET_NAME" -}}
-{{ .Values.appName }}-svc-tls
+{{- $certSecretName := printf "%s-%s-svc-tls" .Values.appName .Values.pfEnv -}}
+{{ $certSecretName }}
 {{- end -}}
 
 {{/*
@@ -30,12 +31,13 @@ Set env variables
 Range env variables
 */}}
 {{- define "EXPORT_ENV_CONFIGS" -}}
+{{- $conigMapName := printf "%s-%s-configmap" .Values.appName .Values.pfEnv -}}
 {{ $appName := .Values.appName }}
 {{- range $key, $val := .Values.configMaps.env }}
 - name: {{ $key }}
   valueFrom:
     configMapKeyRef:
-      name: {{ $appName }}-configmap
+      name: {{ $conigMapName }}
       key: {{ $key }}
 {{- end}}
 - name: PF_VERSION
@@ -57,7 +59,7 @@ Set docker image
 Set Oracle Secret
 */}}
 {{- define "SET_ORACLE_SECRET" -}}
-{{- $secretsMap := printf "cle-oracle-pf-%s-secrets" .Values.pfEnv -}}
+{{- $secretsMap := printf "cle-oracle-%s-secrets" .Values.pfEnv -}}
 {{- range $key, $val := .Values.secrets.oracle_credentials }}
 - name: {{ $key }}
   valueFrom:
@@ -72,7 +74,7 @@ Export Oracle configmap
 */}}
 
 {{- define "EXPORT_ORACLE_CONFIGMAP" -}}
-{{- $cfgMap := printf "cle-oracle-pf-%s-configmap" .Values.pfEnv -}}
+{{- $cfgMap := printf "cle-oracle-%s-configmap" .Values.pfEnv -}}
 {{- range $key, $val := .Values.configMaps.oracledb }}
 - name: {{ $key }}
   valueFrom:

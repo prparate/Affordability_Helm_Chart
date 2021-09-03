@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ .Values.appName }}-configmap
+  name: "{{ .Values.appName }}-{{ .Values.pfEnv }}-configmap"
   namespace: {{ .Release.Namespace }}
 data:
   {{- include "SET_ENV_CONFIGS" . | indent 2 }}
