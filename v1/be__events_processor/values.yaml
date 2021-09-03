@@ -1,0 +1,50 @@
+appName: be-events-processor
+replicasCount: 1
+pfEnv: unset
+
+containers:
+  protocol: TCP
+  containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__events_processor
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+secrets:
+  oracle_credentials:
+    PF_SPRING_DATASOURCE_USERNAME: PF_SPRING_DATASOURCE_USERNAME
+    PF_SPRING_DATASOURCE_PASSWORD: PF_SPRING_DATASOURCE_PASSWORD
+
+configMaps:
+  env:
+    PF_REST_HOST: "0.0.0.0"
+    PF_REST_PORT: "8080"
+  ingress:
+    host: ""
+    tls:
+      secret: internal-secret-tls
+  oracledb:
+    PF_DB_SID: PF_DB_SID
+    PF_SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: PF_SPRING_DATASOURCE_HIKARI_MAX_LIFETIME
+    PF_SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: PF_SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+  kafka_servers:
+    PF_KAFKA_SERVERS: KAFKA_SERVERS
+    PF_KAFKA_OFFSET: KAFKA_OFFSET
