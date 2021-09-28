@@ -15,15 +15,17 @@ Set certificate tls files
 {{- end }}
 {{- end }}
 
+
 {{/*
 Set certificate tls files
 */}} 
-{{- define "CLEARBANK_TLS_FILE"  -}}
-{{- range $key, $val := .Values.configMaps.clearbank_tls_helm }}
+{{- define "CLEARBANK_TLS_FILES"  -}}
+{{- range $key, $val := .Values.secrets.clearbank_certiticate_files }}
 - name: {{ $key }}
   value: {{ $val }}
 {{- end }}
 {{- end }}
+
 
 {{/*
 Set API token secret
