@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: be__events_processor chart
+name: be__events_processor
+type: application
+version: 1.0.0
