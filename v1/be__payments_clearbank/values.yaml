@@ -30,6 +30,9 @@ secrets:
   scylladb_credentials:
       PF_SCYLLA_USERNAME: USERNAME
       PF_SCYLLA_PASSWORD: PASSWORD
+  clearbank_certiticate_files:
+      PF_CLEARBANK_EXTERNAL_PUBLIC_KEY_FILE: /app/clearbank/clearbank-external-public-key.pem
+      PF_CLEARBANK_INTERNAL_PRIVATE_KEY_FILE: /app/clearbank/clearbank-internal-private-key.key
 
 tls:
   files:
