@@ -1,0 +1,9 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  namespace: kong-istio
+  name: {{ .Values.appName }}-grpc-gateway
+config:
+  # TODO: I do not know how or where to mount this file!!!
+  proto: grpc_services/be__insurer_policies/be__insurer_policies.proto
+plugin: grpc-gateway

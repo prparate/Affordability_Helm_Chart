@@ -13,7 +13,7 @@ service:
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
   repository: be__insurer_policies
-  tag: 0.0.0
+  tag: 1.0.0
   policy: Always
 
 updateStrategy:
