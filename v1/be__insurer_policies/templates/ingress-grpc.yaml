@@ -12,7 +12,7 @@ spec:
   - host: {{ .configMaps.ingress.host }}
     http:
       paths:
-      - path: /
+      - path: /v1/insurer-policies
         backend:
           serviceName: {{ .appName }}-svc
           servicePort: {{ .service.port }}
