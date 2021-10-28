@@ -8,11 +8,15 @@ metadata:
     konghq.com/protocols: grpc,grpcs
 spec:
   {{- with .Values}}
+  tls:
+    - hosts:
+        - {{ .configMaps.ingress.host }}
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
     http:
       paths:
-      - path: /v1/insurer-policies
+      - path: /
         backend:
           serviceName: {{ .appName }}-svc
           servicePort: {{ .service.port }}

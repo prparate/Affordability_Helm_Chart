@@ -4,7 +4,7 @@ metadata:
   namespace: kong-istio
   name: {{ .Values.appName }}-svc
   annotations:
-    konghq.com/protocols: grpc,grpcs
+    konghq.com/protocols: grpcs
 spec:
 {{- with .Values }}
   selector:

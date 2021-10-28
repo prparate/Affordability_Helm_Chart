@@ -8,6 +8,10 @@ metadata:
     konghq.com/plugins: {{ .Values.appName }}-grpc-gateway
 spec:
   {{- with .Values}}
+  tls:
+    - hosts:
+        - {{ .configMaps.ingress.host }}
+      secretName: {{ .configMaps.ingress.tls.secret }}
   rules:
   - host: {{ .configMaps.ingress.host }}
     http:
