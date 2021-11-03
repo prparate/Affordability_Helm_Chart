@@ -26,9 +26,9 @@ pull() {
     HELM_EXPERIMENTAL_OCI=1 helm chart pull $REPO_TAG
 }
 
-export() {
-    HELM_EXPERIMENTAL_OCI=1 helm chart export $REPO_TAG
-}
+# export() {
+#     HELM_EXPERIMENTAL_OCI=1 helm chart export $REPO_TAG
+# }
 
 save() {
     D=$1
