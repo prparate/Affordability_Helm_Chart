@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: be__clients chart
+name: be__clients
+type: application
+version: 1.0.0
