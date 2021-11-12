@@ -13,7 +13,7 @@ service:
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
   repository: be__clients
-  tag: 1.0.3
+  tag: 1.0.7
   policy: Always
 
 updateStrategy:
