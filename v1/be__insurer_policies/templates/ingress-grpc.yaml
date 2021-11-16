@@ -1,23 +1,24 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  namespace: kong-istio
+  namespace: kong
   name: {{ .Values.appName }}-ingress-grpc
   annotations:
     kubernetes.io/ingress.class: kong
     konghq.com/protocols: grpc,grpcs
 spec:
-  {{- with .Values}}
+{{- with .Values}}
   tls:
-    - hosts:
-        - {{ .configMaps.ingress.host }}
-      secretName: {{ .configMaps.ingress.tls.secret }}
+    - secretName: {{ .configMaps.ingress.tls.secret }}
+      hosts:
+        - {{ .appName }}-kong.services.dev.premfina.com
   rules:
-  - host: {{ .configMaps.ingress.host }}
+  - host: {{ .appName }}-kong.services.dev.premfina.com
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
           serviceName: {{ .appName }}-svc
           servicePort: {{ .service.port }}
-  {{- end }}
+{{- end }}

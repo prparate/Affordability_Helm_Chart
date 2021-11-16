@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  namespace: kong-istio
+  namespace: kong
   name: {{ .Values.appName }}-certificate
 spec:
   secretName: {{ template "CERT_TLS_SECRET_NAME" . }}

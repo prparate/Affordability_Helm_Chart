@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: kong-istio
+  namespace: kong
   name: {{ .Values.appName }}-deployment
 spec:
   {{- with .Values }}
