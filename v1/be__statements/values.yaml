@@ -13,7 +13,7 @@ service:
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
   repository: be__statements
-  tag: 0.0.0
+  tag: 0.0.10
   policy: Always
 
 updateStrategy:
@@ -33,17 +33,16 @@ tls:
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
 configMaps:
-  server:  
-    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  env:
+    PF_HOST_PORT: 443
   ingress:
     host: "" 
-    tls:
-      secret: internal-secret-tls
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
-    PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
     PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
     PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
+    PF_SCYLLA_SSL: SCYLLA_SSL
+    PF_SCYLLA_ENCRYPTION_KEY: SCYLLA_ENCRYPTION_KEY
   kafka_servers: 
     PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET 
