@@ -39,8 +39,6 @@ configMaps:
     PF_HOST_PORT: 443
   ingress:
     host: ""
-    tls:
-      secret: internal-secret-tls
   redis:
     PF_REDIS_HOST: REDIS_SERVER
     PF_REDIS_NAMESPACE_SEPARATOR: REDIS_SEPARATOR
