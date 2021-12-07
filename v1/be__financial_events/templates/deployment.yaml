@@ -27,6 +27,8 @@ spec:
           {{- include "CERT_TLS_FILE_NAMES" . | indent 12 }}
           {{- include "SET_SCYLLADB_SECRET" . | indent 12 }}
           {{- include "EXPORT_SCYLLADB_CONFIGMAP" . | indent 12 }}
+          {{- include "SET_REDIS_SECRET" . | indent 12 }}
+          {{- include "EXPORT_REDIS_CONFIGMAP" . | indent 12 }}
           {{- include "EXPORT_KAFKA_SERVERS_CONFIGMAP" . | indent 12 }}
           {{- include "EXPORT_KAFKA_TOPICS" . | indent 12 }}
           {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
@@ -41,12 +43,12 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
-          # readinessProbe:
-          #   exec:
-          #     command: ["./be__grpc_health_probe"]
-          # livenessProbe:
-          #   exec:
-          #     command: ["./be__grpc_health_probe"]
+          readinessProbe:
+            exec:
+              command: ["./be__grpc_health_probe"]
+          livenessProbe:
+            exec:
+              command: ["./be__grpc_health_probe"]
           {{- end }}
           lifecycle:
             preStop:
