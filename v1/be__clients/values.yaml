@@ -25,6 +25,8 @@ secrets:
   scylladb_credentials:
       PF_SCYLLA_USERNAME: USERNAME
       PF_SCYLLA_PASSWORD: PASSWORD
+  redis:
+      PF_REDIS_PASSWORD: PASSWORD
 
 tls:
   files:
