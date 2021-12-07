@@ -3,12 +3,12 @@ replicasCount: 1
 
 containers:
   protocol: TCP
-  containerPort: 8080
+  containerPort: 443
 
 service:
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 443
+  targetPort: 443
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
@@ -36,7 +36,7 @@ secrets:
 
 configMaps:
   env:
-    PF_HOST_PORT: "0.0.0.0:8080"
+    PF_HOST_PORT: 443
   ingress:
     host: ""
     tls:
