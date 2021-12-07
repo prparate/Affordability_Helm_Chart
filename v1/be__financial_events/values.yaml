@@ -13,7 +13,7 @@ service:
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
   repository: be__financial_events
-  tag: 0.0.0
+  tag: 1.0.0
   policy: Always
 
 updateStrategy:
@@ -31,6 +31,8 @@ secrets:
   scylladb_credentials:
     PF_SCYLLA_USERNAME: USERNAME
     PF_SCYLLA_PASSWORD: PASSWORD
+  redis:
+    PF_REDIS_PASSWORD: PASSWORD
 
 configMaps:
   env:
@@ -39,6 +41,9 @@ configMaps:
     host: ""
     tls:
       secret: internal-secret-tls
+  redis:
+    PF_REDIS_HOST: REDIS_SERVER
+    PF_REDIS_NAMESPACE_SEPARATOR: REDIS_SEPARATOR
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
