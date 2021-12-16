@@ -1,12 +1,10 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  namespace: kong
-  name: {{ .Values.appName }}-svc
-  annotations:
-    konghq.com/protocols: grpcs
-spec:
+  namespace: {{ .Release.Namespace }}
 {{- with .Values }}
+  name: {{ .appName }}-svc
+spec:
   selector:
     app: {{ .appName }}
   {{- with .service }}

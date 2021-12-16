@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: kong
   name: {{ .Values.appName }}-deployment
+  namespace: {{ .Release.Namespace }}
 spec:
   {{- with .Values }}
   replicas: {{ .replicasCount }}
