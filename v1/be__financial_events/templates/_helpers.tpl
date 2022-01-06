@@ -119,7 +119,7 @@ Set redis secret
 {{- end }}
 
 {{/*
-Range scylladb configmap
+Range redis configmap
 */}}
 {{- define "EXPORT_REDIS_CONFIGMAP" -}}
 {{- range $key, $val := .Values.configMaps.redis }}
