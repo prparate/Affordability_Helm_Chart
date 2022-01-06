@@ -25,6 +25,8 @@ secrets:
   scylladb_credentials:
       PF_SCYLLA_USERNAME: USERNAME
       PF_SCYLLA_PASSWORD: PASSWORD
+  redis:
+      PF_REDIS_PASSWORD: PASSWORD
 
 tls:
   files:
@@ -36,7 +38,10 @@ configMaps:
   env:
     PF_HOST_PORT: 8443
   ingress:
-    host: "" 
+    host: ""
+  redis:
+    PF_REDIS_HOST: REDIS_SERVER
+    PF_REDIS_NAMESPACE_SEPARATOR: REDIS_SEPARATOR
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
