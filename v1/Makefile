@@ -3,13 +3,13 @@ help:		## Displays the help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 .PHONY: save
-save:		## Saves the given helm chart from the directory. [required: APP=${app} DIR=${dir}; optional: VERSION=${version}]
+save:		## Saves the given helm chart from the directory. [required: APP=${app}; optional: VERSION=${version}]
 	@version=$$VERSION ; 	 \
 	if [[ -z $$version ]] ;  \
 	then  					 \
 		version="1.0.0" ;  	 \
 	fi ; 					 \
-	./scripts/bash/helm.sh save $$version $$APP $$DIR
+	./scripts/bash/helm.sh save $$version $$APP
 
 .PHONY: push
 push:		## Pushes the given helm chart. [required: APP=${app}; optional: VERSION=${version}]
