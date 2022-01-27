@@ -90,12 +90,3 @@ case $cmd in
 esac
 
 exit 0
-
-# helm chart pull premfinaukcontainerregistry.azurecr.io/helm/$FEBE/$PROJ:1.0.0
-# helm chart export premfinaukcontainerregistry.azurecr.io/helm/$FEBE/$PROJ:1.0.0
-# helm chart save . premfinaukcontainerregistry.azurecr.io/helm/$FEBE/$PROJ:1.0.0
-
-
-# helm chart push premfinaukcontainerregistry.azurecr.io/helm/$FEBE/$PROJ:1.0.0
-
-
