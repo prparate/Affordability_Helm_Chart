@@ -26,6 +26,31 @@ Set env variables
 {{- end}}
 {{- end }}
 
+{{/*
+Set redis secret
+*/}}
+{{- define "SET_REDIS_SECRET" -}}
+{{- range $key, $val := .Values.secrets.redis }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: redis-secrets
+      key: {{ $val }}
+{{- end}}
+{{- end }}
+
+{{/*
+Range scylladb configmap
+*/}}
+{{- define "EXPORT_REDIS_CONFIGMAP" -}}
+{{- range $key, $val := .Values.configMaps.redis }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: redis-configmap
+      key: {{ $val }}
+{{- end}}
+{{- end }}
 
 {{/*
 Range env variables
