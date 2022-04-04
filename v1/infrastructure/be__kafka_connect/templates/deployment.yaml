@@ -38,7 +38,10 @@ spec:
           env:
            {{- include "SET_ENV_CONFIGS" . | indent 12 }}
             - name: CONNECT_BOOTSTRAP_SERVERS
-              value: kafka.internal.dev.premfina.com:9092
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-servers-configmap
+                  key: KAFKA_SERVERS
           ports:
 {{- with .Values }}
             - containerPort:  {{ .containers.containerPort }}
