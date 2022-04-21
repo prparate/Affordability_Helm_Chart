@@ -134,3 +134,16 @@ Set yoti secret
       key: {{ $val }}
 {{- end}}
 {{- end }}
+
+{{/*
+Set bitly secret
+*/}}
+{{- define "SET_BITLY_SECRET" -}}
+{{- range $key, $val := .Values.secrets.bitly }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: bitly-secrets
+      key: {{ $val }}
+{{- end}}
+{{- end }}

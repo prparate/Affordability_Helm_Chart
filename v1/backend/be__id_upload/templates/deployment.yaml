@@ -30,6 +30,7 @@ spec:
         {{- include "EXPORT_KAFKA_TOPICS" . | indent 12 }}
         {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
         {{- include "SET_YOTI_SECRET" . | indent 12 }}
+        {{- include "SET_BITLY_SECRET" . | indent 12 }}
         name: {{ .Values.appName }}
         image: {{ template "SET_DOCKER_IMAGE" . }}
         {{- with .Values }}
