@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: be__financial_agreements_old chart
+name: be__financial_agreements_old
+type: application
+version: 1.0.0
