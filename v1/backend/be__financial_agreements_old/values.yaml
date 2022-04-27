@@ -1,19 +1,19 @@
-appName: be-financial-agreements
+appName: be-financial-agreements_old
 replicasCount: 1
 
 containers:
   protocol: TCP
-  containerPort: 8443
+  containerPort: 8080
 
 service:
   type: ClusterIP
-  port: 8443
-  targetPort: 8443
+  port: 8080
+  targetPort: 8080
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: be__financial_agreements
-  tag: 1.0.0
+  repository: be__financial_agreements_old
+  tag: 0.0.0
   policy: Always
 
 updateStrategy:
@@ -31,24 +31,19 @@ secrets:
   scylladb_credentials:
     PF_SCYLLA_USERNAME: USERNAME
     PF_SCYLLA_PASSWORD: PASSWORD
-  redis:
-    PF_REDIS_PASSWORD: PASSWORD
 
 configMaps:
   env:
-    PF_HOST_PORT: 8443
+    PF_HOST_PORT: "0.0.0.0:8080"
   ingress:
     host: ""
-  redis:
-    PF_REDIS_HOST: REDIS_SERVER
-    PF_REDIS_NAMESPACE_SEPARATOR: REDIS_SEPARATOR
+    tls:
+      secret: internal-secret-tls
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
     PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
     PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
-    PF_SCYLLA_SSL: SCYLLA_SSL
-    PF_SCYLLA_DEFAULT_PAGE_SIZE: SCYLLA_DEFAULT_PAGE_SIZE
   kafka_servers:
     PF_KAFKA_SERVERS: KAFKA_SERVERS
     PF_KAFKA_OFFSET: KAFKA_OFFSET
