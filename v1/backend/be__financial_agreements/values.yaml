@@ -1,4 +1,4 @@
-appName: be-financial-events
+appName: be-financial-agreements
 replicasCount: 1
 
 containers:
