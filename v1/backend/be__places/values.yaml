@@ -13,7 +13,7 @@ service:
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
   repository: be__places
-  tag: 0.0.0
+  tag: 1.2.3
   policy: Always
 
 updateStrategy:
@@ -31,10 +31,6 @@ tls:
     PF_TLS_CA_FILE: /app/cert/ca.crt
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
-
-ingress:
-  tls:
-    secret: internal-secret-tls
 
 configMaps:
   ingress:

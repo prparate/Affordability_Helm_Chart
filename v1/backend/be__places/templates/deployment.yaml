@@ -2,21 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.appName }}-deployment
-  namespace: {{ .Values.environment }}
+  namespace: {{ .Release.Namespace }}
 spec:
-  replicas: {{ .Values.replicasCount }}
+  {{- with .Values }}
+  replicas: {{ .replicasCount }}
   strategy:
-    type: {{ .Values.updateStrategy.type }}
+    {{- with .updateStrategy }}
+    type: {{ .type }}
     rollingUpdate:
-      maxUnavailable: {{ .Values.updateStrategy.maxUnavailable }}
-      maxSurge: {{ .Values.updateStrategy.maxSurge }}
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+    {{- end }}
   selector:
     matchLabels:
-      app: {{ .Values.appName }}
+      app: {{ .appName }}
   template:
     metadata:
       labels:
-        app: {{ .Values.appName }}
+        app: {{ .appName }}
+  {{- end }}
     spec:
       containers:
         - env:

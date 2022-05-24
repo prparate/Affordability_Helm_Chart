@@ -12,7 +12,7 @@ spec:
     rollingUpdate:
       maxUnavailable: {{ .maxUnavailable }}
       maxSurge: {{ .maxSurge }}
-    {{- end }}  
+    {{- end }} 
   selector:
     matchLabels:
       app: {{ .appName }}
