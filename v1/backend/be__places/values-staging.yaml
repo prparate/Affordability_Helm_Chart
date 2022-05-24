@@ -1,0 +1,32 @@
+# Default values for be-user-manager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+environment: staging-internal
+
+host:
+  name: be-places.internal.staging.premfina.com
+  #name2: be-places.app.staging.premfina.com
+
+volumeMounts:
+  nameFiles: stagingsystemfiles
+  pathFiles: /mnt/pfstagingukfilestorage/staging-system-files
+  shareNameFiles: staging-system-files
+  nameLogs: stagingsystemlogs
+  pathLogs: /mnt/pfstagingukfilestorage/staging-system-logs
+  shareNameLogs: staging-system-logs
+ 
+secrets:
+  env:
+    #sensitive data
+    secretsEnv:
+      PF_DATABASE_HOSTNAME: "pf-staging-uk-core-db.postgres.database.azure.com"
+      PF_DATABASE_USERNAME: "pfadmin@pf-staging-uk-core-db"
+      PF_DATABASE_PASSWORD: "rb65tXG69DjPcCzs"
+      PF_DATABASE_PORT: "5432"
+      PF_DATABASE_SSL_MODE: "require"
+      #PF_GET_ADDRESS_API_KEY: "0D4iu7VFwE2t_bU0KxSvmQ22239"
+      PF_GET_ADDRESS_API_KEY: "PqoHnH2jikS_vZPf8dqMgw31419"
+      PF_GOOGLE_API_KEY: "AIzaSyAMItQycnJpWYCARt9xefd29A2TcfTIfTE"
+      PF_LOQATE_API_KEY: "AE16-XZ12-RR81-MC69"  
+      azurestorageaccountkey: "QkZ2z/yCeQWncl01kOzAatWUTw+fBdggT5WttAyd8Le6WOx0D7MvwHlc80/tmbJdjmCXR/IH8izND5e+zh/e1A=="
+      azurestorageaccountname: "pfstagingukfilestorage"
