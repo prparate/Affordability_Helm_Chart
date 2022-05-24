@@ -1,0 +1,33 @@
+# Default values for be-user-manager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+environment: prod-internal
+
+host:
+  name: be-places.internal.premfina.com
+  #name2: be-places.app.premfina.com
+
+volumeMounts:
+  nameFiles: prodsystemfiles
+  pathFiles: /mnt/pfprodukfilestorage/prod-system-files
+  shareNameFiles: prod-system-files
+  nameLogs: prodsystemlogs
+  pathLogs: /mnt/pfprodukfilestorage/prod-system-logs
+  shareNameLogs: prod-system-logs
+ 
+secrets:
+  env:
+    #sensitive data
+    secretsEnv:
+      PF_DATABASE_HOSTNAME: "pf-prod-uk-core-db.postgres.database.azure.com"
+      PF_DATABASE_USERNAME: "mmladenov@pf-prod-uk-core-db"
+      PF_DATABASE_PASSWORD: "vXCh@anA9.gd@?{p"
+      PF_DATABASE_PORT: "5432"
+      PF_DATABASE_SSL_MODE: "require"
+      PF_GET_ADDRESS_API_KEY: "FvWNVMpo10y2926B3pIZtA18707"
+      PF_GOOGLE_API_KEY: "AIzaSyAMItQycnJpWYCARt9xefd29A2TcfTIfTE"
+      PF_LOQATE_API_KEY: "RR73-AG47-FW67-GH51"
+      #PF_LOQATE_API_KEY: 6uuwkzXcyykmJY94COEr
+      #PF_LOQATE_API_KEY: "AE16-XZ12-RR81-MC69"
+      azurestorageaccountkey: "5V4BlAe6bxqKlKx7AC5r8Y/gQwCMEfzBbZ7/vn+LtMDFAvAQ8kLrVRA/HH8/FH634KDQ0k/czNun8YoCbWrh8g=="
+      azurestorageaccountname: "pfprodukfilestorage"
