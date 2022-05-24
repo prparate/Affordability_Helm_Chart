@@ -35,3 +35,7 @@ tls:
 ingress:
   tls:
     secret: internal-secret-tls
+
+configMaps:
+  ingress:
+    host: ""
