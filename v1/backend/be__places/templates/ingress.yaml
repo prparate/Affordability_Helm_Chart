@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - {{ .Values.host.name }}
+        - {{ .configMaps.ingress.host }}
       secretName: {{ .Values.ingress.tls.secret }}
   rules:
-  - host: {{ .Values.host.name }}
+  - host: {{ .configMaps.ingress.host }}
     http:
       paths:
       - backend:
