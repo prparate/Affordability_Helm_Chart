@@ -37,6 +37,13 @@ Range env variables
       name: postgres-configmap
       key: {{ $val }}
 {{- end}}
+{{- range $key, $val := .Values.configMaps.env }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $appName }}-configmap
+      key: {{ $key }}
+{{- end}}
 - name: PF_VERSION
   value: {{ .Values.image.tag }}
 {{- end }}
