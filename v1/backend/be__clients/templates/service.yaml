@@ -12,5 +12,5 @@ spec:
   ports:
     - port: {{ .port }}
       targetPort: {{ .targetPort }}
-  {{- end }}    
+  {{- end }}
 {{- end }}

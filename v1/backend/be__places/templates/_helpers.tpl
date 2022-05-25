@@ -15,29 +15,37 @@ Set certificate tls files
 {{- end }}
 {{- end }}
 
+
 {{/*
-Create env variables based on secrets
+Set env variables
 */}}
-{{- define "LIST_ENV_VARIABLES"}}
-{{ $sercretName :=  .Values.appName -}}
-{{- range $key, $val := .Values.secrets.env.secretsEnv }}
+{{- define "SET_ENV_CONFIGS" -}}
+{{- range $key, $val := .Values.configMaps.env }}
+{{ $key }}: {{ $val | quote }}
+{{- end}}
+{{- end }}
+
+{{/*
+Range env variables
+*/}}
+{{- define "EXPORT_ENV_CONFIGS" -}}
+{{ $appName := .Values.appName }}
+{{- range $key, $val := .Values.configMaps.database }}
 - name: {{ $key }}
   valueFrom:
-    secretKeyRef:
-      name: {{ printf "%s" $sercretName }}-secrets
+    configMapKeyRef:
+      name: postgres-configmap
+      key: {{ $val }}
+{{- end}}
+{{- range $key, $val := .Values.configMaps.env }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $appName }}-configmap
       key: {{ $key }}
 {{- end}}
 - name: PF_VERSION
   value: {{ .Values.image.tag }}
-{{- end }}
-
-{{/*
-Range and decode env variables 
-*/}}
-{{- define "CREATE_ENV_SECRETS" }}
-{{- range $key, $val := .Values.secrets.env.secretsEnv }}
-{{ $key }}: {{ $val | b64enc }}
-{{- end}}
 {{- end }}
 
 {{/*
@@ -48,4 +56,17 @@ Set docker image
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := .Values.image.tag -}}
 {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+{{- end }}
+
+{{/*
+Set environment secrets
+*/}}
+{{- define "SET_ENV_SECRETS" -}}
+{{- range $key, $val := .Values.secrets.env }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: be-places-secrets
+      key: {{ $val }}
+{{- end}}
 {{- end }}
