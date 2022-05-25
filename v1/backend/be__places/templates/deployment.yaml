@@ -24,8 +24,9 @@ spec:
     spec:
       containers:
         - env:
+          {{- include "SET_ENV_SECRETS" . | indent 12 }}
           {{- include "CERT_TLS_FILE_NAMES" . | indent 12 }}
-          {{- include "LIST_ENV_VARIABLES" . | indent 12 }}
+          {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
           name: {{ .Values.appName }}
           image: {{ template "SET_DOCKER_IMAGE" . }}
           imagePullPolicy: {{ .Values.image.policy }}

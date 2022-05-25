@@ -23,8 +23,11 @@ updateStrategy:
 
 secrets:
   env:
-    secretsEnv:
-      PF_HOST_PORT: "80"
+    PF_DATABASE_PASSWORD: PF_DATABASE_PASSWORD
+    PF_DATABASE_USERNAME: PF_DATABASE_USERNAME
+    PF_GET_ADDRESS_API_KEY: PF_GET_ADDRESS_API_KEY
+    PF_GOOGLE_API_KEY: PF_GOOGLE_API_KEY
+    PF_LOQATE_API_KEY: PF_LOQATE_API_KEY
 
 tls:
   files:
@@ -33,5 +36,11 @@ tls:
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
 configMaps:
+  env:
+    PF_HOST_PORT: 80
+  database:
+    PF_DATABASE_HOSTNAME: HOSTNAME
+    PF_DATABASE_PORT: PORT
+    PF_DATABASE_SSL_MODE: SSL_MODE
   ingress:
     host: ""
