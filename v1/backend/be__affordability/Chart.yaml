@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.2.3
+description: be__affordability chart
+name: be__affordability
+type: application
+version: 1.0.0
