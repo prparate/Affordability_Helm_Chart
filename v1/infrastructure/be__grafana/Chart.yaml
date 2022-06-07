@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: be__grafana chart
+name: be__grafana
+type: application
+version: 1.0.0
