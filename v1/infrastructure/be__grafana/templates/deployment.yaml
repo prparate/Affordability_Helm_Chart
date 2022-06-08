@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+{{- with .Values }}
+  replicas: {{ .replicasCount }}
+  strategy:
+    type: {{ .updateStrategy.type }}
+    rollingUpdate:
+      maxUnavailable: {{ .updateStrategy.maxUnavailable }}
+      maxSurge: {{ .updateStrategy.maxSurge }}
+{{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+{{- with .Values.image }}
+          image: {{ .registry }}/{{ .repository }}:{{ .tag }}
+          imagePullPolicy: {{ .policy }}
+{{- end }}
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "500m"
+          #env:
+          # {{- include "SET_ENV_CONFIGS" . | indent 12 }}
+          #  - name: GRAFANA
+          #    value: grafana.internal.dev.premfina.com:3000
+          ports:
+{{- with .Values }}
+            - containerPort:  {{ .containers.containerPort }}
+              protocol: {{ .containers.protocol | quote }}
+ {{- end }}
+ 

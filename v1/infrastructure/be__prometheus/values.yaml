@@ -1,0 +1,27 @@
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 9090
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 9090
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: pipeline_base_prometheus
+  tag: latest
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+configMaps:
+  ingress:
+    host: prometheus.internal.dev.premfina.com
+    tls:
+      secret: internal-secret-tls
