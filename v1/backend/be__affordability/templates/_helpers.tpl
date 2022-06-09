@@ -16,6 +16,19 @@ Set certificate tls files
 {{- end }}
 
 {{/*
+Set service hostnames
+*/}}
+{{- define "EXPORT_SERVICES_HOSTNAMES" -}}
+{{- range $key, $val := .Values.configMaps.services }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: services-configmap
+      key: {{ $key }}
+{{- end}}
+{{- end }}
+
+{{/*
 Set env variables
 */}}
 {{- define "SET_ENV_CONFIGS" -}}
