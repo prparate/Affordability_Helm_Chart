@@ -1,4 +1,4 @@
-appName: bitbucket-runner
+appName: scylla-migrator
 replicasCount: 1
 
 containers:
@@ -24,7 +24,7 @@ secrets:
   scylladb_credentials:
     PF_SCYLLA_USERNAME: USERNAME
     PF_SCYLLA_PASSWORD: PASSWORD
-  bitbucket_runner:
+  bitbucket_runner_oauth:
     OAUTH_CLIENT_ID: BITBUCKET_RUNNER_OAUTH_CLIENT_ID
     OAUTH_CLIENT_SECRET: BITBUCKET_RUNNER_OAUTH_CLIENT_SECRET
 
@@ -37,5 +37,5 @@ tls:
 configMaps:
   env:
     BITBUCKET_ACCOUNT_UUID: 3c877e87-e037-405a-be98-f9251756db19
-    BITBUCKET_RUNNER_UUID: afe7ccec-9d0b-5a2a-a074-42226e3b56b4
+    BITBUCKET_RUNNER_UUID: 71843ece-ef9c-54d1-87d1-83dd321a3931
     WORKING_DIRECTORY: "/tmp"

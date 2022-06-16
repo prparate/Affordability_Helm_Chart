@@ -1,6 +1,6 @@
 {{/*
 Set certificate secret name tls
-*/}} 
+*/}}
 {{- define "CERT_TLS_SECRET_NAME" -}}
 {{ .Values.appName }}-svc-tls
 {{- end -}}
@@ -28,16 +28,15 @@ Set scylladb secret
 {{- end }}
 {{- end }}
 
-
 {{/*
 Set bitbucket runner secrets
 */}}
 {{- define "SET_BITBUCKET_RUNNER_SECRET" -}}
-{{- range $key, $val := .Values.secrets.bitbucket_runner }}
+{{- range $key, $val := .Values.secrets.bitbucket_runner_oauth }}
 - name: {{ $key }}
   valueFrom:
     secretKeyRef:
-      name: bitbucket-runner-secrets
+      name: runner-migrator-scylla-secrets
       key: {{ $val }}
 {{- end }}
 {{- end }}
@@ -154,24 +153,6 @@ Set docker in docker image
 */}}
 {{- define "SET_DOCKER_IN_DOCKER" -}}
 {{- $image := .Values.dind.image -}}
-{{- $tag := .Values.dind.tag -}}
-{{- printf "%s:%s" $image $tag -}}
-{{- end }}
-
-{{/*
-Get account uuid
-*/}}
-{{- define "GET_ACCOUNT_UUID" -}}
-{{- $image := .Values.secrets.bitbucket_runner -}}
-{{- $tag := .Values.dind.tag -}}
-{{- printf "%s:%s" $image $tag -}}
-{{- end }}
-
-{{/*
-Get runner uuid
-*/}}
-{{- define "GET_RUNNER_UUID" -}}
-{{- $image := .Values.secrets.bitbucket_runner -}}
 {{- $tag := .Values.dind.tag -}}
 {{- printf "%s:%s" $image $tag -}}
 {{- end }}
