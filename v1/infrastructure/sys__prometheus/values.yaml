@@ -12,7 +12,7 @@ service:
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: pipeline_base_prometheus
+  repository: sys__prometheus
   tag: latest
   policy: Always
 
