@@ -42,4 +42,7 @@ configMaps:
   ingress:
     host: prometheus.internal.dev.premfina.com
     tls:
-      secretName: services-secret-tls
+      secret: services-secret-tls
+
+
+      
