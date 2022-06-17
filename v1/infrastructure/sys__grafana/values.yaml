@@ -10,8 +10,8 @@ service:
   targetPort: 3000
 
 image:
-  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: pipeline_base_grafana
+  registry: premfinaukcontainerregistry.azurecr.io/docker/infrastructure
+  repository: sys__grafana
   tag: 1.0.0
   policy: Always
 
