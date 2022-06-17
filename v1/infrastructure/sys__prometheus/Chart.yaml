@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.0
+description: sys__prometheus chart
+name: sys__prometheus
+type: application
+version: 1.0.0

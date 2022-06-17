@@ -35,10 +35,6 @@ spec:
             limits:
               memory: "2Gi"
               cpu: "500m"
-          #env:
-          # {{- include "SET_ENV_CONFIGS" . | indent 12 }}
-          #  - name: GRAFANA
-          #    value: grafana.internal.dev.premfina.com:3000
           ports:
 {{- with .Values }}
             - containerPort:  {{ .containers.containerPort }}
