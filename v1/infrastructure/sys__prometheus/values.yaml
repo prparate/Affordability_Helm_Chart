@@ -11,7 +11,7 @@ service:
   targetPort: 9090
 
 image:
-  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  registry: premfinaukcontainerregistry.azurecr.io/docker/infrastructure
   repository: sys__prometheus
   tag: latest
   policy: Always
