@@ -15,10 +15,9 @@ spec:
       http:
         paths:
         - pathType: Prefix
-          path: /
+          path: /(.*)
           backend:
             service:
               name: {{ .Release.Name }}-svc
               port:
                 number: {{ .Values.service.port }}
-
