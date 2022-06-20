@@ -46,6 +46,7 @@ configMaps:
     PF_SMS_HANDLER_HOST: http://10.6.0.5:8051
     PF_FILE_MANAGER_HOST: http://be-file-manager.internal.dev.premfina.com
     PF_AGREEMENT_FILES_HOST: http://10.6.0.5:8017
+    PF_YOTI_WEBHOOK_ENDPOINT: https://be-gateway.internal.dev.premfina.com/v1/session/complete
   ingress:
     host: ""
   scylladb:
