@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.appName }}-job
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    metadata:
+      labels:
+      {{- with .Values }}
+        accountUuid: "{{{ .configMaps.env.BITBUCKET_ACCOUNT_UUID }}}"
+        runnerUuid: {{ .configMaps.env.BITBUCKET_RUNNER_UUID }}
+    spec:
+      containers:
+        - name: {{ .appName }}
+      {{- end }}
+          image: {{ template "SET_DOCKER_IMAGE" . }}
+          env:
+          {{- include "SET_BITBUCKET_RUNNER_SECRET" . | indent 14 }}
+          {{- include "EXPORT_ENV_CONFIGS" . | indent 14 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: docker-containers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: var-run
+              mountPath: /var/run
+        - name: docker-in-docker
+          image: {{ template "SET_DOCKER_IN_DOCKER" . }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: docker-containers
+              mountPath: /var/lib/docker/containers
+            - name: var-run
+              mountPath: /var/run
+      restartPolicy: OnFailure
+      volumes:
+        - name: tmp
+        - name: docker-containers
+        - name: var-run
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1

@@ -1,0 +1,41 @@
+appName: scylla-migrator
+replicasCount: 1
+
+containers:
+  protocol: TCP
+  containerPort: 8443
+
+service:
+  type: ClusterIP
+  port: 8443
+  targetPort: 8443
+
+image:
+  registry: docker-public.packages.atlassian.com/sox/atlassian
+  repository: bitbucket-pipelines-runner
+  tag: "1"
+  policy: Always
+
+dind:
+  image: docker
+  tag: 20.10.7-dind
+
+secrets:
+  scylladb_credentials:
+    PF_SCYLLA_USERNAME: USERNAME
+    PF_SCYLLA_PASSWORD: PASSWORD
+  bitbucket_runner_oauth:
+    OAUTH_CLIENT_ID: BITBUCKET_RUNNER_OAUTH_CLIENT_ID
+    OAUTH_CLIENT_SECRET: BITBUCKET_RUNNER_OAUTH_CLIENT_SECRET
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  env:
+    BITBUCKET_ACCOUNT_UUID: 3c877e87-e037-405a-be98-f9251756db19
+    BITBUCKET_RUNNER_UUID: 71843ece-ef9c-54d1-87d1-83dd321a3931
+    WORKING_DIRECTORY: "/tmp"
