@@ -41,11 +41,12 @@ tls:
 
 configMaps:
   env:
-    PF_HOST_PORT: 8443
-    PF_EMAIL_HANDLER_HOST: http://be-email.internal.dev.premfina.com
-    PF_SMS_HANDLER_HOST: http://10.6.0.5:8051
-    PF_FILE_MANAGER_HOST: http://be-file-manager.internal.dev.premfina.com
-    PF_AGREEMENT_FILES_HOST: http://10.6.0.5:8017
+    PF_HOST_PORT: PF_HOST_PORT
+    PF_EMAIL_HANDLER_HOST: PF_EMAIL_HANDLER_HOST
+    PF_SMS_HANDLER_HOST: PF_SMS_HANDLER_HOST
+    PF_FILE_MANAGER_HOST: PF_FILE_MANAGER_HOST
+    PF_AGREEMENT_FILES_HOST: PF_AGREEMENT_FILES_HOST
+    PF_YOTI_WEBHOOK_ENDPOINT: PF_YOTI_WEBHOOK_ENDPOINT
   ingress:
     host: ""
   scylladb:
