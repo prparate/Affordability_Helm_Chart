@@ -72,11 +72,18 @@ Range env variables
 */}}
 {{- define "EXPORT_ENV_CONFIGS" -}}
 {{ $appName := .Values.appName }}
-{{- range $key, $val := .Values.configMaps.server }}
+{{- range $key, $val := .Values.configMaps.env }}
 - name: {{ $key }}
   valueFrom:
     configMapKeyRef:
       name: common-configmap
+      key: {{ $val }}
+{{- end}}
+{{- range $key, $val := .Values.configMaps.env }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: external-configmap
       key: {{ $val }}
 {{- end}}
 {{- range $key, $val := .Values.configMaps.env }}
