@@ -28,10 +28,8 @@ spec:
           image: {{ .registry }}/{{ .repository }}:{{ .tag }}
           imagePullPolicy: {{ .policy }}
 {{- end }}
-          args:
-            - "--config.file=/app/prometheus.yml"
           volumeMounts:
-          - name: {{ .Release.Name }}-volume
+          - name: prometheus-config
             mountPath: /app/prometheus.yml
             subPath: prometheus.yml
           resources:
@@ -46,8 +44,8 @@ spec:
             - containerPort:  {{ .containers.containerPort }}
               protocol: {{ .containers.protocol | quote }}
  {{- end }}
- 
+
       volumes:
-        - name: {{ .Release.Name }}-volume
+        - name: prometheus-config
           configMap:
-            name: configmap
+            name: {{ .Release.Name }}-configmap
