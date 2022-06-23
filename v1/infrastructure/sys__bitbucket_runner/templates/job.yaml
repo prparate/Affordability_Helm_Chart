@@ -8,7 +8,7 @@ spec:
     metadata:
       labels:
       {{- with .Values }}
-        accountUuid: {{ printf "{%s}" .configMaps.env.BITBUCKET_ACCOUNT_UUID }}
+        accountUuid: {{ .configMaps.env.BITBUCKET_ACCOUNT_UUID }}
         runnerUuid: {{ .configMaps.env.BITBUCKET_RUNNER_UUID }}
     spec:
       containers:
