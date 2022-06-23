@@ -18,6 +18,8 @@ spec:
           env:
           {{- include "SET_BITBUCKET_RUNNER_SECRET" . | indent 12 }}
           {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
+            - name: WORKING_DIRECTORY
+              value: "/tmp"
           volumeMounts:
             - name: tmp
               mountPath: /tmp
