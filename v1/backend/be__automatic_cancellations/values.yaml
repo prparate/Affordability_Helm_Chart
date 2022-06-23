@@ -1,0 +1,69 @@
+appName: be-automatic-cancellations
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 443
+
+service:
+  rest:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  grpc:
+    type: ClusterIP
+    port: 443
+    targetPort: 443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__automatic_cancellations
+  tag: 0.0.0
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  scylladb_credentials:
+      PF_SCYLLA_USERNAME: USERNAME
+      PF_SCYLLA_PASSWORD: PASSWORD
+  cle_integration_secrets:
+      PF_CLE_API_APISUPER_PASSWORD_TPFUAT2: PF_CLE_API_APISUPER_PASSWORD_TPFUAT2
+      PF_CLE_API_APISUPER_PASSWORD_DBRND: PF_CLE_API_APISUPER_PASSWORD_DBRND
+      PF_CLE_API_APISUPER_PASSWORD_DBTEST: PF_CLE_API_APISUPER_PASSWORD_DBTEST
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  env:
+    PF_GRPC_HOST: "0.0.0.0"
+    PF_GRPC_PORT: "443"
+    PF_REST_HOST: "0.0.0.0"
+    PF_REST_PORT: "80"
+  server:
+    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  ingress:
+    grpc:
+      host: ""
+      tls:
+        secret: internal-secret-tls
+    rest:
+      host: ""
+      tls:
+        secret: services-secret-tls
+  scylladb:
+    PF_SCYLLA_HOSTS: SCYLLA_SERVERS
+    PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
+    PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
+    PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
+  env_specific_services:
+      PF_CLE_API_SERVICE_HOSTNAME_TPFUAT2: PF_CLE_API_SERVICE_HOSTNAME_TPFUAT2
+      PF_CLE_API_SERVICE_HOSTNAME_DBTEST: PF_CLE_API_SERVICE_HOSTNAME_DBTEST
+      PF_CLE_API_SERVICE_HOSTNAME_DBRND: PF_CLE_API_SERVICE_HOSTNAME_DBRND
