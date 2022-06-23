@@ -12,8 +12,8 @@ service:
     targetPort: 8080
   grpc:
     type: ClusterIP
-    port: 443
-    targetPort: 443
+    port: 8443
+    targetPort: 8443
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
