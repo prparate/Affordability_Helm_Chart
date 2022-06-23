@@ -12,9 +12,9 @@ spec:
   ports:
     - name: grpc
       port: {{ .grpc.port }}
-      targetPort: {{ .grpc.targetPort }}
+      targetPort: {{ .targetPort }}
     - name: rest
       port: {{ .rest.port }}
-      targetPort: {{ .rest.targetPort }}
+      targetPort: {{ .targetPort }}
   {{- end }}
 {{- end }}
