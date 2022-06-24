@@ -25,12 +25,6 @@ secrets:
     OAUTH_CLIENT_ID: BITBUCKET_RUNNER_OAUTH_CLIENT_ID
     OAUTH_CLIENT_SECRET: BITBUCKET_RUNNER_OAUTH_CLIENT_SECRET
 
-tls:
-  files:
-    PF_TLS_CA_FILE: /app/cert/ca.crt
-    PF_TLS_CRT_FILE: /app/cert/tls.crt
-    PF_TLS_KEY_FILE: /app/cert/tls.key
-
 configMaps:
   env:
     BITBUCKET_ACCOUNT_UUID: "" # loaded from bitbucket
