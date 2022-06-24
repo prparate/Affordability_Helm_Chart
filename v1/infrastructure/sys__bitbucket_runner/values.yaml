@@ -35,4 +35,3 @@ configMaps:
   env:
     BITBUCKET_ACCOUNT_UUID: "" # loaded from bitbucket
     BITBUCKET_RUNNER_UUID: "" # loaded from bitbucket
-    WORKING_DIRECTORY: "/tmp"
