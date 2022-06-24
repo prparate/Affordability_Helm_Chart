@@ -24,8 +24,6 @@ Range env variables
       name: "runner-{{ $appName }}-configmap"
       key: {{ $key }}
 {{- end }}
-- name: PF_VERSION
-  value: {{ .Values.image.tag }}
 {{- end }}
 
 {{/*
