@@ -33,7 +33,7 @@ Set env variables
 */}}
 {{- define "SET_ENV_CONFIGS" -}}
 {{- range $key, $val := .Values.configMaps.env }}
-{{ $key }}: {{ printf "{%s}" $val }}
+{{ $key }}: {{ printf "{%s}" $val | quote }}
 {{- end }}
 {{- end }}
 
