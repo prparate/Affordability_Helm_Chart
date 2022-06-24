@@ -41,12 +41,6 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
-#          readinessProbe:
-#            exec:
-#                command: ["./be__grpc_health_probe"]
-#            livenessProbe:
-#            exec:
-#              command: ["./be__grpc_health_probe"]
           {{- end }}
           lifecycle:
             preStop:
