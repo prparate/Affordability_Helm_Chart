@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, DELETE, POST, OPTIONS"
 spec:
   tls:
-  {{ - with .Values }}
+  {{- with .Values }}
   - hosts:
       - {{ .configMaps.ingress.rest.host }}
     secretName: {{ .configMaps.ingress.rest.tls.secret }}
@@ -24,4 +24,4 @@ spec:
               serviceName: {{ .appName }}-svc
               servicePort: {{ .service.rest.port }}
             path: /(.*)
-  {{ - end }}
+  {{- end }}

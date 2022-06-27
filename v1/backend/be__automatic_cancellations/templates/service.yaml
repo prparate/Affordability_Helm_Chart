@@ -2,16 +2,16 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: {{ .Release.Namespace }}
-  {{ - with .Values }}
+  {{- with .Values }}
 name: {{ .appName }}-svc
 spec:
   selector:
     app: {{ .appName }}
-  {{ - with .service }}
+  {{- with .service }}
   type: {{ .type }}
   ports:
     - name: rest
       port: {{ .rest.port }}
       targetPort: {{ .targetPort }}
-  {{ - end }}
-  {{ - end }}
+  {{- end }}
+  {{- end }}
