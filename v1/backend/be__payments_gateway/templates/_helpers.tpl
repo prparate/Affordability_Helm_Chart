@@ -90,7 +90,7 @@ Range env variables
   valueFrom:
     configMapKeyRef:
       name: common-configmap
-      key: {{ $val }}
+      key: {{ $val | quote }}
 {{- end}}
 {{- range $key, $val := .Values.configMaps.env }}
 - name: {{ $key }}
