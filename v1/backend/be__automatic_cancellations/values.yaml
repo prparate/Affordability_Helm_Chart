@@ -9,7 +9,7 @@ service:
   rest:
     type: ClusterIP
     port: 80
-    targetPort: 80
+    targetPort: 8080
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
