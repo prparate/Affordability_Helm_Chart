@@ -12,7 +12,7 @@ spec:
     rollingUpdate:
       maxUnavailable: {{ .maxUnavailable }}
       maxSurge: {{ .maxSurge }}
-    {{- end }}
+    {{- end }}  
   selector:
     matchLabels:
       app: {{ .appName }}
@@ -21,33 +21,33 @@ spec:
       labels:
         app: {{ .appName }}
   {{- end }}
-  spec:
-    containers:
-      - env:
-        {{- include "CERT_TLS_FILE_NAMES" . | indent 12 }}
-        {{- include "SET_SCYLLADB_SECRET" . | indent 12 }}
-        {{- include "EXPORT_SCYLLADB_CONFIGMAP" . | indent 12 }}
-        {{- include "EXPORT_KAFKA_SERVERS_CONFIGMAP" . | indent 12 }}
-        {{- include "EXPORT_KAFKA_TOPICS" . | indent 12 }}
-        {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
-        {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
-        name: {{ .Values.appName }}
-        image: {{ template "SET_DOCKER_IMAGE" . }}
-        {{- with .Values }}
-        imagePullPolicy: {{ .image.policy }}
-        ports:
-          - containerPort: {{ .containers.containerPort }}
-            protocol: {{ .containers.protocol | quote }}
-        volumeMounts:
-          - mountPath: "/app/cert"
-            name: app-tls
-            readOnly: true
-        {{- end }}
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "sleep 15"]
-    volumes:
+    spec:
+      containers:
+        - env:
+          {{- include "CERT_TLS_FILE_NAMES" . | indent 12 }}
+          {{- include "SET_SCYLLADB_SECRET" . | indent 12 }}
+          {{- include "EXPORT_SCYLLADB_CONFIGMAP" . | indent 12 }}
+          {{- include "EXPORT_KAFKA_SERVERS_CONFIGMAP" . | indent 12 }}
+          {{- include "EXPORT_KAFKA_TOPICS" . | indent 12 }}
+          {{- include "EXPORT_ENV_CONFIGS" . | indent 12 }}
+          {{- include "EXPORT_SERVICES_HOSTNAMES" . | indent 12 }}
+          name: {{ .Values.appName }}
+          image: {{ template "SET_DOCKER_IMAGE" . }}
+          {{- with .Values }}
+          imagePullPolicy: {{ .image.policy }}
+          ports:
+            - containerPort:  {{ .containers.containerPort }}
+              protocol: {{ .containers.protocol | quote }}
+          volumeMounts:
+            - mountPath: "/app/cert"
+              name: app-tls
+              readOnly: true
+          {{- end }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 15"]
+      volumes:
       - name: app-tls
         secret:
           secretName: {{ template "CERT_TLS_SECRET_NAME" . }}

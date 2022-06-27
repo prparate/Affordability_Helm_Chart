@@ -12,16 +12,16 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, DELETE, POST, OPTIONS"
 spec:
   tls:
-  {{- with .Values }}
-  - hosts:
-      - {{ .configMaps.ingress.rest.host }}
-    secretName: {{ .configMaps.ingress.rest.tls.secret }}
+  {{- with .Values}}
+    - hosts:
+        - {{ .configMaps.ingress.rest.host }}
+      secretName: {{ .configMaps.ingress.rest.tls.secret }}
   rules:
-    - host: {{ .configMaps.ingress.rest.host }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ .appName }}-svc
-              servicePort: {{ .service.rest.port }}
-            path: /(.*)
+  - host: {{ .configMaps.ingress.rest.host }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ .appName }}-svc
+          servicePort: {{ .service.rest.port }}
+        path: /(.*)
   {{- end }}
