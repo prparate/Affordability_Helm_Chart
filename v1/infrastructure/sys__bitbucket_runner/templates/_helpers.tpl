@@ -16,7 +16,7 @@ Set bitbucket runner secrets
 Range env variables
 */}}
 {{- define "EXPORT_ENV_CONFIGS" -}}
-{{ $appName := .Values.appName }}
+{{ $appName := .Values.appName }} 
 {{- range $key, $val := .Values.configMaps.env }}
 - name: {{ $key }}
   valueFrom:
