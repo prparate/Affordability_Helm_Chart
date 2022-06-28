@@ -3,12 +3,12 @@ replicasCount: 2
 
 containers:
   protocol: TCP
-  containerPort: 443
+  containerPort: 8080
 
 service:
   rest:
     type: ClusterIP
-    port: 443
+    port: 8080
     targetPort: 8080
 
 image:
