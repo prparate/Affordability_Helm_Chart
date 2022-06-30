@@ -40,16 +40,6 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
-          readinessProbe:
-            tcpSocket:
-              port: {{ .containers.containerPort }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: {{ .containers.containerPort }}
-            initialDelaySeconds: 15
-            periodSeconds: 20
           {{- end }}
           lifecycle:
             preStop:
@@ -58,4 +48,4 @@ spec:
       volumes:
       - name: app-tls
         secret:
-          secretName: {{ template "CERT_TLS_SECRET_NAME" . }} 
+          secretName: {{ template "CERT_TLS_SECRET_NAME" . }}

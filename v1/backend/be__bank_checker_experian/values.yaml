@@ -3,12 +3,13 @@ replicasCount: 2
 
 containers:
   protocol: TCP
-  containerPort: 80
+  containerPort: 8080
 
 service:
-  type: ClusterIP
-  port: 80
-  targetPort: 80
+  rest:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
@@ -31,23 +32,17 @@ tls:
     PF_TLS_CA_FILE: /app/cert/ca.crt
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
-    PF_EXPERIAN_TLS_CRT_FILE: /app/be-bank-checker-experian/tls.crt
-    PF_EXPERIAN_TLS_KEY_FILE: /app/be-bank-checker-experian/tls.key
 
 configMaps:
-  server:  
-    PF_HOST_PORT: GRPC_SSL_HOST_PORT
+  server:
+    PF_REST_HOST_PORT: REST_HOST_PORT
+  ingress:
+    rest:
+      host: ""
+      tls:
+        secret: services-secret-tls
   scylladb:
     PF_SCYLLA_HOSTS: SCYLLA_SERVERS
     PF_SCYLLA_REPLICATION_STRATEGY: SCYLLA_REPLICATION_STRATEGY
     PF_SCYLLA_TIMEOUT: SCYLLA_TIMEOUT
     PF_SCYLLA_CONNECT_TIMEOUT: SCYLLA_CONNECT_TIMEOUT
-  env:
-    PF_GRPC_HOST: "0.0.0.0"
-    PF_GRPC_PORT: "443"
-    PF_REST_HOST: "0.0.0.0"
-    PF_REST_PORT: "80"
-  ingress:
-    host: ""
-    tls:
-      secret: internal-secret-tls    

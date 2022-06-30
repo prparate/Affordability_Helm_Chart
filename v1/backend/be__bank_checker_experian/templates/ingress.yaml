@@ -1,23 +1,27 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.appName }}-ingress
+  name: {{ .Values.appName }}-rest-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
-    kubernetes.io/ingress.class: nginx  
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 128m
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, DELETE, POST, OPTIONS"
 spec:
-  {{- with .Values}}
   tls:
+  {{- with .Values}}
     - hosts:
-        - {{ .configMaps.ingress.host }}
-      secretName: {{ .configMaps.ingress.tls.secret }}
+        - {{ .configMaps.ingress.rest.host }}
+      secretName: {{ .configMaps.ingress.rest.tls.secret }}
   rules:
-  - host: {{ .configMaps.ingress.host }}
+  - host: {{ .configMaps.ingress.rest.host }}
     http:
       paths:
       - backend:
           serviceName: {{ .appName }}-svc
-          servicePort: {{ .service.port }}
+          servicePort: {{ .service.rest.port }}
         path: /(.*)
   {{- end }}
