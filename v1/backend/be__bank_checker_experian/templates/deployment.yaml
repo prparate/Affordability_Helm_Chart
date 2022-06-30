@@ -42,16 +42,6 @@ spec:
             - mountPath: "/app/be-bank-checker-experian"
               name: experian-tls
               readOnly: true  
-          readinessProbe:
-            tcpSocket:
-              port: {{ .containers.containerPort }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: {{ .containers.containerPort }}
-            initialDelaySeconds: 15
-            periodSeconds: 20
           {{- end }}
           lifecycle:
             preStop:

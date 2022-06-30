@@ -10,7 +10,8 @@ spec:
   {{- with .service }}
   type: {{ .type }}
   ports:
-    - port: {{ .port }}
+    - name: rest
+      port: {{ .rest.port }}
       targetPort: {{ .targetPort }}
-  {{- end }}    
+  {{- end }}
 {{- end }}
