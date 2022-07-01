@@ -38,6 +38,19 @@ Set env variables
 {{- end }}
 
 {{/*
+Set postgresdb secret
+*/}}
+{{- define "SET_POSTGRESDB_SECRET" -}}
+{{- range $key, $val := .Values.secrets.database }}
+- name: {{ $key }}
+  valueFrom:
+    secretKeyRef:
+      name: postgresdb-secrets
+      key: {{ $val }}
+{{- end}}
+{{- end }}
+
+{{/*
 Range env variables
 */}}
 {{- define "EXPORT_ENV_CONFIGS" -}}

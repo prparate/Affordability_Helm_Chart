@@ -30,6 +30,11 @@ tls:
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
+secrets:
+  database:
+    PF_POSTGRES_USERNAME: USERNAME
+    PF_POSTGRES_PASSWORD: PASSWORD
+
 configMaps:
   env:
     PF_HOST_PORT: 80
