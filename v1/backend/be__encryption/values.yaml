@@ -1,0 +1,38 @@
+appName: be-encryption
+replicasCount: 2
+
+containers:
+  protocol: TCP
+  containerPort: 8443
+
+service:
+  type: ClusterIP
+  port: 8443
+  targetPort: 8443
+
+image:
+  registry: premfinaukcontainerregistry.azurecr.io/docker/backend
+  repository: be__encryption
+  tag: 1.5.1
+  policy: Always
+
+updateStrategy:
+  type: RollingUpdate
+  maxUnavailable: 10%
+  maxSurge: 1
+
+secrets:
+  cryptography_secrets:
+    PF_ENCRYPTION_SALT: ENCRYPTION_SALT
+
+tls:
+  files:
+    PF_TLS_CA_FILE: /app/cert/ca.crt
+    PF_TLS_CRT_FILE: /app/cert/tls.crt
+    PF_TLS_KEY_FILE: /app/cert/tls.key
+
+configMaps:
+  env:
+    PF_HOST_PORT: 8443
+  ingress:
+    host: ""
