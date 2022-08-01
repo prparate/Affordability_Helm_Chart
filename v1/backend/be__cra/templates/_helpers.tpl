@@ -16,7 +16,7 @@ Set certificate tls files
 {{- end }}
 
 {{/*
-Set scylladb secret
+Set postgresql secret
 */}}
 {{- define "SET_POSTGRESQL_SECRET" -}}
 {{- range $key, $val := .Values.secrets.postgresql_credentials }}
@@ -59,6 +59,13 @@ Range env variables
     configMapKeyRef:
       name: {{ $appName }}-configmap
       key: {{ $key }}
+{{- end}}
+{{- range $key, $val := .Values.configMaps.paths }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: shared-storage-mountpoints-configmap
+      key: {{ $val }}
 {{- end}}
 - name: PF_VERSION
   value: {{ .Values.image.tag }}

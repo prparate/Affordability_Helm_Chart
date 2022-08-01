@@ -44,6 +44,9 @@ configMaps:
     PF_ID_UPLOAD_HOST: PF_ID_UPLOAD_SERVICE_HOSTNAME
   env:
     PF_HOST_PORT: 443
+    PF_REPORT_GENERATION_TEMP_STORAGE_PATH: /temp
+  paths:
+    PF_FILE_STORAGE_PATH: PF_CRA_REPORT_SHARED_STORAGE_PATH
   ingress:
     host: ""
   postgresql:
