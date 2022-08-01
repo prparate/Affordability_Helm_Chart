@@ -45,6 +45,7 @@ configMaps:
   env:
     PF_HOST_PORT: 443
     PF_REPORT_GENERATION_TEMP_STORAGE_PATH: /temp
+    PF_CA_CERT_PATH: /app/cert/ca.crt
   paths:
     PF_FILE_STORAGE_PATH: PF_CRA_REPORT_SHARED_STORAGE_PATH
   ingress:
