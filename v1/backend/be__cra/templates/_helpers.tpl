@@ -71,6 +71,13 @@ Set env variables
 {{- range $key, $val := .Values.configMaps.env }}
 {{ $key }}: {{ $val | quote }}
 {{- end}}
+{{- range $key, $val := .Values.configMaps.common_env }}
+{{- if eq $key "PF_FILE_STORAGE_PATH"}}
+{{ $key }}: {{ printf "%s/be__cra/cra_report" $val }}
+{{- else }}
+{{ $key }}: {{ $val | quote }}
+{{- end }}
+{{- end }}
 {{- end }}
 
 {{/*
