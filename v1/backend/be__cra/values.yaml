@@ -46,6 +46,7 @@ configMaps:
     PF_HOST_PORT: 443
   common_env:
     PF_FILE_STORAGE_PATH: SHARED_STORAGE_PATH
+    PF_REPORT_GENERATION_TEMP_STORAGE_PATH: /temp
   ingress:
     host: ""
   postgresql:
