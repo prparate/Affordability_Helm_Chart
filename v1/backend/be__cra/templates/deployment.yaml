@@ -39,6 +39,8 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
+            - mountPath: {{ .volume.path }}
+              name: system-files
           readinessProbe:
             tcpSocket:
               port: 443
@@ -58,3 +60,7 @@ spec:
       - name: app-tls
         secret:
           secretName: {{ template "CERT_TLS_SECRET_NAME" . }}
+      - name: system-files
+        azureFile:
+          shareName: {{ .Values.volume.name }}
+          secretName: filestorage-secrets

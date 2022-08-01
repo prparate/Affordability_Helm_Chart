@@ -32,6 +32,10 @@ tls:
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
+volume:
+  name: dev-system-files
+  path: /mnt/pfdevukfilestorage
+
 configMaps:
   services:
     PF_ENVIRONMENT: PF_ENVIRONMENT_NAME
