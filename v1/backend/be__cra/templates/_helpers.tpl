@@ -63,7 +63,7 @@ Range env variables
 {{- range $key, $val := .Values.configMaps.paths }}
 - name: {{ $key }}
   valueFrom:
-    secretKeyRef:
+    configMapKeyRef:
       name: shared-storage-mountpoints-configmap
       key: {{ $val }}
 {{- end}}
