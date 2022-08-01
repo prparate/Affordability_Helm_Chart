@@ -39,16 +39,6 @@ spec:
             - mountPath: "/app/cert"
               name: app-tls
               readOnly: true
-          readinessProbe:
-            tcpSocket:
-              port: 443
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: 443
-            initialDelaySeconds: 15
-            periodSeconds: 20
           {{- end }}
           lifecycle:
             preStop:
