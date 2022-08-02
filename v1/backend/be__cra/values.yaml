@@ -23,8 +23,8 @@ updateStrategy:
 
 secrets:
   postgresql_credentials:
-    PF_POSTGRES_USER: USERNAME
-    PF_POSTGRES_PASSWORD: PASSWORD
+    PF_POSTGRES_USER: COREDB_USERNAME
+    PF_POSTGRES_PASSWORD: COREDB_PASSWORD
 
 tls:
   files:
