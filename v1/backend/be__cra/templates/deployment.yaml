@@ -41,16 +41,6 @@ spec:
               readOnly: true
             - mountPath: {{ .volume.path }}
               name: system-files
-          readinessProbe:
-            tcpSocket:
-              port: 443
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: 443
-            initialDelaySeconds: 15
-            periodSeconds: 20
           {{- end }}
           lifecycle:
             preStop:

@@ -32,6 +32,7 @@ tls:
     PF_TLS_CRT_FILE: /app/cert/tls.crt
     PF_TLS_KEY_FILE: /app/cert/tls.key
 
+# To be replaced by the actual environment variables loaded on the deployment scripts
 volume:
   name: dev-system-files
   path: /mnt/pfdevukfilestorage
@@ -49,7 +50,6 @@ configMaps:
   env:
     PF_HOST_PORT: 443
     PF_REPORT_GENERATION_TEMP_STORAGE_PATH: /temp
-    PF_CA_CERT_PATH: /app/cert/ca.crt
   paths:
     PF_FILE_STORAGE_PATH: PF_CRA_REPORT_SHARED_STORAGE_PATH
   ingress:
