@@ -95,3 +95,16 @@ Set environment secrets
       key: {{ $val }}
 {{- end}}
 {{- end }}
+
+{{/*
+Set service config
+*/}}
+{{- define "SET_SERVICE_CONFIG" -}}
+{{- range $key, $val := .Values.configMaps.affordability_config }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: affordability-config
+      key: {{ $key }}
+{{- end}}
+{{- end }}
