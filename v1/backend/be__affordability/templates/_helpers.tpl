@@ -108,3 +108,16 @@ Set service config
       key: {{ $key }}
 {{- end}}
 {{- end }}
+
+{{/*
+Set app insights config
+*/}}
+{{- define "SET_APP_INSIGHTS_CONFIG" -}}
+{{- range $key, $val := .Values.configMaps.app_insights_config }}
+- name: {{ $key }}
+  valueFrom:
+    configMapKeyRef:
+      name: app-insights-config
+      key: {{ $key }}
+{{- end}}
+{{- end }}
