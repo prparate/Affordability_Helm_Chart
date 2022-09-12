@@ -22,6 +22,6 @@ updateStrategy:
 
 configMaps:
   ingress:
-    host: schema-registry.internal.dev.premfina.com
+    host: schema-registry.internal.premfina.com
     tls:
       secret: internal-secret-tls

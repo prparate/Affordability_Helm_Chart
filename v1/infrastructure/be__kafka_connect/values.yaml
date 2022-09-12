@@ -24,7 +24,7 @@ updateStrategy:
 
 configMaps:
   ingress:
-    host: kafka-connect.internal.dev.premfina.com
+    host: kafka-connect.internal.premfina.com
     tls:
       secret: internal-secret-tls
   env:
