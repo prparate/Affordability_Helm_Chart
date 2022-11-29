@@ -15,7 +15,7 @@ service:
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
-  repository: be__cle_api
+  repository: be__premfina_api
   tag: 0.0.0
   policy: Always
 
