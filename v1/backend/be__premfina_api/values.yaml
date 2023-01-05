@@ -36,3 +36,5 @@ configMaps:
       host: "cle-api-pf-dev.services.dev.premfina.com"
       tls:
         secret: services-secret-tls
+  app_insights_config:
+    APPINSIGHTS_INSTRUMENTATIONKEY: APPINSIGHTS_INSTRUMENTATIONKEY
