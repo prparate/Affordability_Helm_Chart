@@ -3,13 +3,13 @@ replicasCount: 2
 
 containers:
   protocol: TCP
-  containerPort: 8080
+  containerPort: 80
 
 service:
   rest:
     type: ClusterIP
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 80
 
 image:
   registry: premfinaukcontainerregistry.azurecr.io/docker/backend
