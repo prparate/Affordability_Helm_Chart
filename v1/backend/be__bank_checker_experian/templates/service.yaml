@@ -12,6 +12,6 @@ spec:
   ports:
     - name: rest
       port: {{ .rest.port }}
-      targetPort: {{ .targetPort }}
+      targetPort: {{ .rest.targetPort }}
   {{- end }}
 {{- end }}
